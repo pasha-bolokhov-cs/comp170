@@ -13,7 +13,7 @@ foreach $document ( @ARGV ) {
 				     PeerPort => "http(80)",);
     unless ($remote) { die "cannot connect to http daemon on $host" }
     $remote->autoflush(1);
-    print $remote "GET $document HTTP/1.1" . $BLANK;
+    print $remote "GET $document HTTP/1.0" . $BLANK;
     while ( <$remote> ) { print }
     close $remote;
 }
