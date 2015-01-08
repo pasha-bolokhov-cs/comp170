@@ -1,8 +1,14 @@
 #!/usr/bin/python
 
-import os, random
+import os, random, time
 
 print "Content-type:text/html\n\n"
-print "A random number is: ", random.randint(1,100)
-print "A Query String submitted is: ", os.environ['QUERY_STRING']
+print "<html>"
+print "<body>"
+print "A random number is: ", random.randint(1,100), "<br>"
+print "A Query String submitted is: ", os.environ['QUERY_STRING'], "<br>"
+print "Current time is: %s<br>" % time.asctime(time.localtime())
+print "</body>"
+print "</html>"
+
 
