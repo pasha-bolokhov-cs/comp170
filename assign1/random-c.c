@@ -16,13 +16,15 @@ int main () {
   /* HTML */
   printf("<html><title>C Example</title></head><body>");
 
-  /* Generate a random number and display the environment variable QUERY_STRING" */
+  /* Generate a random number and display the "name" as per the query */
   printf("A random number is:%10d<br>\n ", rand());
   printf("Your name is: %20s<br>\n", getenv("QUERY_STRING"));
+
+  /* Print the current time */
   time_sec = time(NULL);
   asctime_r(localtime_r(&time_sec, &ltime), time_str);
   printf("Current time is: %s<br>\n", time_str);
 
   /* Close the HTML */
-  printf("</body></html>");
+  printf("</body></html>\n");
 }
