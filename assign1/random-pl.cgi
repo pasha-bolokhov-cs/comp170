@@ -16,9 +16,14 @@
 #
 
 
+# generate a random number
 $r = rand(10);
+
+# get the current time
 $curr_time = localtime(time);
 
+# print the random number, QUERY_STRING and 
+# the current time wrapped in HTML
 print <<"EOF";
 Content-type:text/html
 

@@ -18,13 +18,18 @@
 
 import os, random, time
 
+# Print HTML headers
 print "Content-type:text/html\n\n"
 print "<html>"
 print "<head><title>Random</title></head>"
 print "<body>"
+
+# Print useful data: a random number, QUERY_STRING and the current time
 print "A random number is: ", random.randint(1,100), "<br>"
 print "Your name is: `%s'<br>" % os.environ['QUERY_STRING']
 print "Current time is: %s<br>" % time.asctime(time.localtime())
+
+# Complete HTML
 print "</body>"
 print "</html>"
 
