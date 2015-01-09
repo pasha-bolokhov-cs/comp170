@@ -11,5 +11,5 @@ all: $(PROGS)
 	$(CC) -o $@ $<
 
 clean:
-	-rm -f *~
+	-rm -f $(PROGS) *~
 
