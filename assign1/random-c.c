@@ -1,3 +1,18 @@
+/*
+ * Assignment 1
+ * Program name: random-c.cgi
+ * Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+ * Date: January 8, 2014
+ * Estimated Completion Time: 4-6h
+ * Actual Completion Time: 8h
+ * Description: 
+ *     A C program (to be used as a CGI script) that prints a random number,
+ *     a name (taken from QUERY_STRING), and current time, all embedded into HTML format
+ * Invocation:
+ *     http://site.example.com/path/random-pl.cgi?Steph
+ * Requires: n/a
+ */
+
 #include <stdio.h>
 #include <stdlib.h> 
 #include <time.h>
