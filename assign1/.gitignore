@@ -1,6 +1,6 @@
 # Ignore backups
 *~
 
-# Ignore the C binary
+# Ignore the C binaries
 random-c*.cgi
 
