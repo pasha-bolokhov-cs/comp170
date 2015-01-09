@@ -2,5 +2,5 @@
 *~
 
 # Ignore the C binary
-random-c.cgi
+random-c*.cgi
 

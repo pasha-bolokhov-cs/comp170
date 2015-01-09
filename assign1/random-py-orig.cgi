@@ -7,7 +7,7 @@ print "<html>"
 print "<head><title>Random</title></head>"
 print "<body>"
 print "A random number is: ", random.randint(1,100), "<br>"
-print "Query String submitted is: `", os.environ['QUERY_STRING'], "'<br>"
+print "Query String submitted is: `%s'<br>" % os.environ['QUERY_STRING']
 print "</body>"
 print "</html>"
 

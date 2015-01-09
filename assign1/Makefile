@@ -1,10 +1,13 @@
 
 
-SRC	=	random-c.c
+SRC	=	random-c.c random-c-orig.c
 
-PROG	=	random-c.cgi
+PROGS	=	random-c.cgi random-c-orig.cgi
 
-$(PROG): $(SRC)
+.PHONY: all
+all: $(PROGS)
+
+%.cgi: %.c
 	$(CC) -o $@ $<
 
 clean:
