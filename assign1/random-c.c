@@ -3,9 +3,9 @@
 #include <time.h>
 
 int main () {
-  time_t    time_sec;
-  char      time_str[80];
-  struct tm ltime;
+  time_t    time_sec;        /* time in seconds */
+  struct tm ltime;           /* parsed time as returned by 'asctime_r()' */
+  char      time_str[80];    /* time converted to a readable string */
 
   /* Seed the random number generator */
   srand(time(NULL));
