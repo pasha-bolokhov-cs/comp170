@@ -23,7 +23,7 @@ $r = rand(10);
 $curr_time = localtime(time);
 
 # print the random number, QUERY_STRING and 
-# the current time wrapped in HTML
+# the current time wrapped in HTML and an HTTP reply
 print <<"EOF";
 Content-type:text/html
 
