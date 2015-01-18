@@ -1,0 +1,70 @@
+<!-- 
+  Assignment 2
+  Program name: form.php
+  Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+  Date: January 15, 2014
+  Estimated Completion Time: ## hours
+  Actual Completion Time: ## hours
+  Description: ##
+  Invocation: ##
+  Requires: 
+-->
+
+<html>
+  <!-- Head -->
+  <head>
+    <title>
+      Calculator Form
+    </title>
+
+    <style>
+      input {
+      	text-align: right;
+      }
+    </style>
+  </head>
+
+  <!-- Body -->
+  <body>
+    <div>
+      <form action="calculate.php">
+	<fieldset>
+	  <legend>Calculator</legend>
+	  <!-- First number -->
+	  <label for="first">
+	    Enter a number
+	    <input type="text" value="0" id="first">
+	  </label>
+	  <br>
+	  <br>
+
+	  <!-- Second number -->
+	  <label for="second">
+	    Enter another number
+	    <input type="text" value="0" id="second">
+	  </label>
+	  <br>
+	  <br>
+
+	  <!-- Operation -->
+	  <label for="operation">
+	    Choose an operation to perform
+	    <select name="operation" id="operation">
+	      <option value="+" selected>+</option>
+	      <option value="-">-</option>
+	      <option value="*">*</option>
+	      <option value="/">/</option>
+	      <option value="**">**</option>
+	    </select>
+	    <br>
+	    <br>
+
+	    <!-- Button -->
+	  </label>
+	  <button type="submit">Go</button>
+	</fieldset>
+      </form>
+    </div>
+    <div></div>
+  </body>
+</html>
