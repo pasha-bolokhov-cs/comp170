@@ -1,4 +1,10 @@
 
+	URLs
+	----
+
+	Part I		http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign2/part1.php?name=Miranda
+	Part II		http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign2/form.html
+
 
 	FILES
 	-----
@@ -8,6 +14,8 @@
 	form.html	The calculator web form (Part II)
 
 	perform.php	The PHP script performing the calculation (Part II)
+
+	p-code		Pseudo code for both PHP programs
 
 
 
