@@ -1,13 +1,14 @@
 <!-- 
   Assignment 2
-  Program name: form.php
+  Program name: form.html
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: January 15, 2014
-  Estimated Completion Time: ## hours
-  Actual Completion Time: ## hours
-  Description: ##
-  Invocation: ##
-  Requires: 
+  Date: January 18, 2014
+  Estimated Completion Time: 10 hours
+  Actual Completion Time: 16 hours
+  Description: 
+	A web form performing an arithmetic operation on two numbers.
+  Invocation: http://URL/form.html
+  Requires: n/a
 -->
 
 <html>
@@ -37,22 +38,22 @@
       <!-- Main Content -->
       <div class="row">
 	<div class="col-xs-12">
-	  <form action="calculate.php">
+	  <form action="perform.php" method="post">
 
 	    <div class="row">
 	      <!-- First number -->
 	      <div class="col-xs-12 col-md-2">
-		<input type="text" placeholder="First number" id="first" class="form-control">
+		<input type="text" placeholder="First number" name="first" id="first" class="form-control">
 	      </div>
 	      
 	      <!-- Second number -->
 	      <div class="col-xs-12 col-md-2">
-		<input type="text" placeholder="Second number" id="second" class="form-control">
+		<input type="text" placeholder="Second number" name="second" class="form-control">
 	      </div>
 
 	      <!-- Operation -->
 	      <div class="col-xs-1">
-		<select name="operation" id="operation" class="form-control">
+		<select name="operation" name="operation" class="form-control">
 		  <option value="+" selected>+</option>
 		  <option value="-">-</option>
 		  <option value="*">*</option>

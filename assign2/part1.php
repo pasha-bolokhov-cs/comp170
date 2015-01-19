@@ -3,8 +3,8 @@
   Program name: part1.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
   Date: January 15, 2014
-  Estimated Completion Time: 6 hours
-  Actual Completion Time: 4 hours
+  Estimated Completion Time: 10 hours
+  Actual Completion Time: 16 hours
   Description: 
   	A PHP program which prints "Hello World", the name submitted in the GET request,
   	current time in SI format, a scale bar representing current portion of the day,

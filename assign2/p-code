@@ -1,0 +1,28 @@
+
+Pseudo Code
+-----------
+
+
+part1.php:
+	Print Hello World
+
+	Print the name given in the URL
+
+	Print the current date in SI format
+	
+	Draw a line representing the current hour
+		Calculate the width of the line based on current hour
+		Put an upper bar with the full width
+		Put the intermediate bar with the calculated width
+		Put a lower bar with the full width
+	
+	Display browser information
+
+
+
+perform.php:
+	Obtain POST data
+
+	Create a hash mapping arithmetic operations to operational strings
+
+	Print the result selected by the submitted operation
