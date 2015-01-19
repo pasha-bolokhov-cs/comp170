@@ -13,58 +13,71 @@
 <html>
   <!-- Head -->
   <head>
+    <!-- Title -->
     <title>
       Calculator Form
     </title>
 
-    <style>
-      input {
-      	text-align: right;
-      }
-    </style>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
   </head>
 
   <!-- Body -->
   <body>
-    <div>
-      <form action="calculate.php">
-	<fieldset>
-	  <legend>Calculator</legend>
-	  <!-- First number -->
-	  <label for="first">
-	    Enter a number
-	    <input type="text" value="0" id="first">
-	  </label>
-	  <br>
-	  <br>
+    <div class="container-fluid">
 
-	  <!-- Second number -->
-	  <label for="second">
-	    Enter another number
-	    <input type="text" value="0" id="second">
-	  </label>
-	  <br>
-	  <br>
+      <!-- Page Header -->
+      <div class="row page-header">
+	<div class="col-xs-12">
+	  <h1>Calculator</h1>
+	</div>
+      </div>
 
-	  <!-- Operation -->
-	  <label for="operation">
-	    Choose an operation to perform
-	    <select name="operation" id="operation">
-	      <option value="+" selected>+</option>
-	      <option value="-">-</option>
-	      <option value="*">*</option>
-	      <option value="/">/</option>
-	      <option value="**">**</option>
-	    </select>
-	    <br>
-	    <br>
+      <!-- Main Content -->
+      <div class="row">
+	<div class="col-xs-12">
+	  <form action="calculate.php">
 
-	    <!-- Button -->
-	  </label>
-	  <button type="submit">Go</button>
-	</fieldset>
-      </form>
-    </div>
-    <div></div>
+	    <div class="row">
+	      <!-- First number -->
+	      <div class="col-xs-12 col-md-2">
+		<input type="text" placeholder="First number" id="first" class="form-control">
+	      </div>
+	      
+	      <!-- Second number -->
+	      <div class="col-xs-12 col-md-2">
+		<input type="text" placeholder="Second number" id="second" class="form-control">
+	      </div>
+
+	      <!-- Operation -->
+	      <div class="col-xs-1">
+		<select name="operation" id="operation" class="form-control">
+		  <option value="+" selected>+</option>
+		  <option value="-">-</option>
+		  <option value="*">*</option>
+		  <option value="/">/</option>
+		  <option value="**">**</option>
+		</select>
+	      </div>
+	      
+	      <!-- Button -->
+	      <div class="col-xs-3">
+		<button type="submit" class="btn btn-primary">
+		  <span class="glyphicon glyphicon-road"></span>
+		  &nbsp;Go
+		</button>
+	      </div>
+
+	    </div> <!-- /row -->
+	  </form>
+	</div> <!-- /col-xs-12 wrapping the form-->
+      </div> <!-- /row -->
+    </div> <!-- /container-fluid -->
+
+    <!-- JQuery and Bootstrap -->
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
+
 </html>
