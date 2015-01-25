@@ -1,0 +1,75 @@
+<!--
+  Assignment 3
+  Program name: ##
+  Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+  Date: January 24, 2015
+  Estimated Completion Time: 6 hr
+  Actual Completion Time: ## 
+  Description: ##
+  Invocation: ##
+  Requires: ##
+-->
+
+<html>
+  <!-- Head -->
+  <head>
+    <!-- Title -->
+    <title>
+      Log Record Parse Form
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- Script -->
+    <script>
+      angular.module('formApp', []);
+      angular.module('formApp').controller("formController", function() {
+      });
+    </script>
+  </head>
+
+  <!-- Body -->
+  <body ng-app="formApp">
+    <div class="container-fluid">
+
+      <!-- Page Header -->
+      <div class="row page-header">
+	<div class="col-xs-12">
+	  <h1>Log Record Parsing - Validate!</h1>
+	</div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="row">
+	<div class="col-xs-12">
+	  <form novalidate name="form" ng-controller="formController">
+
+	    <div class="row">
+	      <!-- First number -->
+	      <div class="col-xs-12 col-md-8">
+		<input type="text" placeholder="Log record" name="record" id="record" class="form-control">
+	      </div>
+	      
+	      <!-- Button -->
+	      <div class="col-xs-3">
+		<button type="submit" class="btn btn-primary">
+		  <span class="glyphicon glyphicon-road"></span>
+		  &nbsp;Go
+		</button>
+	      </div>
+
+	    </div> <!-- /row -->
+	  </form>
+	</div> <!-- /col-xs-12 wrapping the form-->
+      </div> <!-- /row -->
+    </div> <!-- /container-fluid -->
+
+    <!-- JQuery and Bootstrap -->
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="angular.min.js"></script>
+  </body>
+
+</html>
