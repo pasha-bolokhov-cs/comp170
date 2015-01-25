@@ -21,13 +21,6 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
-
-    <!-- Script -->
-    <script>
-      angular.module('formApp', []);
-      angular.module('formApp').controller("formController", function() {
-      });
-    </script>
   </head>
 
   <!-- Body -->
@@ -44,12 +37,12 @@
       <!-- Main Content -->
       <div class="row">
 	<div class="col-xs-12">
-	  <form novalidate name="form" ng-controller="formController">
+	  <form novalidate name="form" ng-controller="formController" ng-submit="submitForm()">
 
 	    <div class="row">
 	      <!-- First number -->
 	      <div class="col-xs-12 col-md-8">
-		<input type="text" placeholder="Log record" name="record" id="record" class="form-control">
+		<input type="text" placeholder="Log record" ng-model="record" class="form-control">
 	      </div>
 	      
 	      <!-- Button -->
@@ -70,6 +63,18 @@
     <script src="jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="angular.min.js"></script>
+
+    <!-- Script -->
+    <script>
+      angular.module('formApp', []);
+      angular.module('formApp').controller("formController",
+      	function($scope, $http) {
+		$scope.record = undefined;
+		$scope.submitForm = function() {
+console.log("submitForm(): on enter");		
+		}
+      });
+    </script>
   </body>
 
 </html>
