@@ -100,16 +100,21 @@
 			$http.post("parse-log.php", request)
 			.success(function(data) {
 				// process the response
-				$scope.ip = data["ip"];
-				$scope.size = data["size"];
-				$scope.showResult = true;
-				$scope.error = false;
+				if (data["error"]) {
+					$scope.error = "Error: " + data["error"];
+ 				} else {
+					$scope.ip = data["ip"];
+					$scope.size = data["size"];
+					$scope.error = false;
+				}
 			})
 			.error(function(data, status) {
 				console.log(data);
-				$scope.showResult = true;
 				$scope.error = "Error accessing the server: " + status + ".";
 			});
+
+			// Indicate that we have an answer
+			$scope.showResult = true;
 		}
       });
     </script>
