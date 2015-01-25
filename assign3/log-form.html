@@ -42,7 +42,7 @@
 	    <div class="row">
 	      <!-- First number -->
 	      <div class="col-xs-12 col-md-8">
-		<input type="text" placeholder="Log record" ng-model="record" class="form-control">
+		<input type="text" placeholder="Type a log record" ng-model="record" class="form-control">
 	      </div>
 	      
 	      <!-- Button -->
@@ -61,14 +61,14 @@
       <!-- Results -->
       <div class="row" ng-show="showResult && !error">
 	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="success" close="showResult=false">
+	  <alert class="text-center" type="success" close="showResult=false; record=undefined">
 	    Parsed IP address <em>{{ ip }}</em> and size <em>{{ size }}</em>
 	  </alert>
 	</div>
       </div> <!-- /div with the results -->
       <div class="row" ng-show="showResult && error">
 	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="danger" close="showResult=false">{{ error }}</alert>
+	  <alert class="text-center" type="danger" close="showResult=false; record=undefined">{{ error }}</alert>
 	</div>
       </div> <!-- /div with any HTTP errors -->
     </div> <!-- /container-fluid -->
