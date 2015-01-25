@@ -1,0 +1,49 @@
+json data = {"record":"24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] \"GET /~cst401/comp170/assign3/log-form.html HTTP/1.1\" 200 2666 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36\""}
+data = stdClass Object
+(
+    [record] => 24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+)
+
+data->record = 24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+json data = {"record":"24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] \"GET /~cst401/comp170/assign3/log-form.html HTTP/1.1\" 200 2666 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36\""}
+data = stdClass Object
+(
+    [record] => 24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+)
+
+data->record = 24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+Record = `24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"'
+Request: 24.68.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+Response: 24.68.124.10 2666
+json data = {"record":"24.98.124.10 - - [24/Jan/2015:23:02:05 -0800] \"GET /~cst401/comp170/assign3/log-form.html HTTP/1.1\" 200 2666 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36\""}
+data = stdClass Object
+(
+    [record] => 24.98.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+)
+
+data->record = 24.98.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+Record = `24.98.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"'
+json data = {"record":"24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] \"GET /~cst401/comp170/assign3/log-form.html HTTP/1.1\" 200 2666 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36\""}
+data = stdClass Object
+(
+    [record] => 24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+)
+
+data->record = 24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+Record = `24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"'
+json data = {"record":"24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] \"GET /~cst401/comp170/assign3/log-form.html HTTP/1.1\" 200 2666 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36\""}
+data = stdClass Object
+(
+    [record] => 24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+)
+
+data->record = 24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+Record = `24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"'
+json data = {"record":"24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] \"GET /~cst401/comp170/assign3/log-form.html HTTP/1.1\" 200 2666 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36\""}
+data = stdClass Object
+(
+    [record] => 24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+)
+
+data->record = 24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"
+Record = `24.99.124.10 - - [24/Jan/2015:23:02:05 -0800] "GET /~cst401/comp170/assign3/log-form.html HTTP/1.1" 200 2666 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36"'

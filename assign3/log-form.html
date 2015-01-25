@@ -24,20 +24,20 @@
   </head>
 
   <!-- Body -->
-  <body ng-app="formApp">
+  <body ng-app="formApp" ng-controller="formController">
     <div class="container-fluid">
 
       <!-- Page Header -->
       <div class="row page-header">
 	<div class="col-xs-12">
-	  <h1>Log Record Parsing - Validate!</h1>
+	  <h1>Log Record Parsing</h1>
 	</div>
       </div>
 
-      <!-- Main Content -->
+      <!-- Form -->
       <div class="row">
 	<div class="col-xs-12">
-	  <form novalidate name="form" ng-controller="formController" ng-submit="submitForm()">
+	  <form novalidate name="form" ng-submit="submitForm()">
 
 	    <div class="row">
 	      <!-- First number -->
@@ -57,21 +57,57 @@
 	  </form>
 	</div> <!-- /col-xs-12 wrapping the form-->
       </div> <!-- /row -->
+
+      <!-- Results -->
+      <div class="row" ng-show="showResult && !error">
+	<div class="col-xs-12 col-md-8">
+	  <alert class="text-center" type="success" close="showResult=false">
+	    Parsed IP address <em>{{ ip }}</em> and size <em>{{ size }}</em>
+	  </alert>
+	</div>
+      </div> <!-- /div with the results -->
+      <div class="row" ng-show="showResult && error">
+	<div class="col-xs-12 col-md-8">
+	  <alert class="text-center" type="danger" close="showResult=false">{{ error }}</alert>
+	</div>
+      </div> <!-- /div with any HTTP errors -->
     </div> <!-- /container-fluid -->
 
-    <!-- JQuery and Bootstrap -->
+    <!-- JQuery, Bootstrap, AngularJS and Bootstrap UI -->
     <script src="jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="angular.min.js"></script>
+    <script src="ui-bootstrap-tpls.min.js"></script>
 
-    <!-- Script -->
+    <!-- Angular module and Controllers -->
     <script>
-      angular.module('formApp', []);
+      angular.module('formApp', ['ui.bootstrap']);
       angular.module('formApp').controller("formController",
-      	function($scope, $http) {
+	function($scope, $http) {
+		// Initialization
 		$scope.record = undefined;
+		$scope.showResult = false;
+		$scope.error = false;
+
+		// Function attached to the "submit" button
 		$scope.submitForm = function() {
-console.log("submitForm(): on enter");		
+      			/* Form a request object */
+      			request = { record: $scope.record };
+
+			// Send the request to the PHP script
+			$http.post("parse-log.php", request)
+			.success(function(data) {
+				// process the response
+				$scope.ip = data["ip"];
+				$scope.size = data["size"];
+				$scope.showResult = true;
+				$scope.error = false;
+			})
+			.error(function(data, status) {
+				console.log(data);
+				$scope.showResult = true;
+				$scope.error = "Error accessing the server: " + status + ".";
+			});
 		}
       });
     </script>
