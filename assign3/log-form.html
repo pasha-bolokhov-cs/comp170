@@ -21,6 +21,9 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- AngularJS needs to be loaded in "head" section -->
+    <script src="angular.min.js"></script>
   </head>
 
   <!-- Body -->
@@ -59,24 +62,23 @@
       </div> <!-- /row -->
 
       <!-- Results -->
-      <div class="row" ng-show="showResult && !error">
+      <div class="row" ng-show="showResult && !error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
 	  <alert class="text-center" type="success" close="showResult=false; record=undefined">
 	    Parsed IP address <em>{{ ip }}</em> and size <em>{{ size }}</em>
 	  </alert>
 	</div>
       </div> <!-- /div with the results -->
-      <div class="row" ng-show="showResult && error">
+      <div class="row" ng-show="showResult && error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
 	  <alert class="text-center" type="danger" close="showResult=false; record=undefined">{{ error }}</alert>
 	</div>
       </div> <!-- /div with any HTTP errors -->
     </div> <!-- /container-fluid -->
 
-    <!-- JQuery, Bootstrap, AngularJS and Bootstrap UI -->
+    <!-- JQuery, Bootstrap, and Bootstrap UI -->
     <script src="jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="angular.min.js"></script>
     <script src="ui-bootstrap-tpls.min.js"></script>
 
     <!-- Angular module and Controllers -->
