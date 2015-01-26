@@ -1,0 +1,31 @@
+
+Pseudo Code
+-----------
+
+
+parse-log.php:
+
+	Receive data from the POST request and decode into a record
+
+	Validate the record
+
+	Look for the IP address, the HTTP status code and message size in the record
+
+	Return a (soft) error if no match is found
+
+	If the HTTP request was not seen as successful, reset the effective size to zero
+
+	Return the IP address and effective size back to the form
+
+
+
+word-match.php:
+
+	Receive POST data and decode into a sentence
+
+	Validate the string
+
+	Perform a PCRE replacement
+
+	Send the string back to HTML form
+
