@@ -10,6 +10,9 @@
 
 	FILES
 	-----
+
+	p-code		Pseudo Code
+
 	reg.php		Script from Part I
 
 	log-form.html	The HTML form from Part II
