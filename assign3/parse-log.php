@@ -1,14 +1,19 @@
 <?php
 /*
   Assignment 3
-  Program name: ##
+  Program name: parse-log.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
   Date: January 24, 2015
   Estimated Completion Time: 6 hr
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Actual Completion Time: 12 hr
+  Description:
+	A script that receives an httpd log record via a POST request,
+	parses the initiator IP address and the size of the reply message,
+	and sends the parsed results back
+  Invocation: via HTML form
+  Requires:
+	Data should be sent to this script via a POST request in JSON format.
+	It must contain an object, which in turn must contain a field "record".
 */
 	/* get the log record from JSON data */
 	$jsonData = file_get_contents("php://input");

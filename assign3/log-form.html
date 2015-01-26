@@ -1,13 +1,15 @@
 <!--
   Assignment 3
-  Program name: ##
+  Program name: log-form.html
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
   Date: January 24, 2015
   Estimated Completion Time: 6 hr
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Actual Completion Time: 12 hr
+  Description:
+	A form that accepts an httpd access log record, sends this record
+	to a PHP script and displays the answer
+  Invocation: http://URL/log-form.html
+  Requires: n/a
 -->
 
 <html>
@@ -43,7 +45,7 @@
 	  <form novalidate name="form" ng-submit="submitForm()">
 
 	    <div class="row">
-	      <!-- First number -->
+	      <!-- Ask the log record -->
 	      <div class="col-xs-12 col-md-8">
 		<input type="text" placeholder="Type a log record" ng-model="record" class="form-control">
 	      </div>

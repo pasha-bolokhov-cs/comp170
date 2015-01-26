@@ -1,13 +1,16 @@
 <!--
   Assignment 3
-  Program name: ##
+  Program name: word-form.html
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
   Date: January 24, 2015
   Estimated Completion Time: 6 hr
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Actual Completion Time: 12 hr
+  Description:
+	A form that asks for a sentence, sends it to a PHP script
+	and displays the returned information back, along with
+	a reference to a historical epoch of the internet
+  Invocation: http://URL/word-form.html
+  Requires: n/a
 -->
 
 <html>
@@ -15,7 +18,7 @@
   <head>
     <!-- Title -->
     <title>
-      Log Record Parse Form
+      Word Replace Form
     </title>
 
     <!-- Bootstrap -->
@@ -33,7 +36,7 @@
       <!-- Page Header -->
       <div class="row page-header">
 	<div class="col-xs-12">
-	  <h1>Log Record Parsing</h1>
+	  <h1>Word Replacement in a Sentence</h1>
 	</div>
       </div>
 
@@ -43,9 +46,9 @@
 	  <form novalidate name="form" ng-submit="submitForm()">
 
 	    <div class="row">
-	      <!-- First number -->
+	      <!-- Ask a sentence -->
 	      <div class="col-xs-12 col-md-8">
-		<input type="text" placeholder="Type a log record" ng-model="record" class="form-control">
+		<input type="text" placeholder="Type a sentence" ng-model="sentence" class="form-control">
 	      </div>
 	      
 	      <!-- Button -->
@@ -64,14 +67,16 @@
       <!-- Results -->
       <div class="row" ng-show="showResult && !error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="success" close="showResult=false; record=undefined">
-	    Parsed IP address <em>{{ ip }}</em> and size <em>{{ size }}</em>
+	  <alert class="text-center" type="success" close="showResult=false; sentence=undefined">
+	    Returned sentence: <em>{{ response }}</em>
+	    <br><br>
+	    <h5>On October 29, 1969 the first message was sent over ARPANET, the predecessor of Internet</h5>
 	  </alert>
 	</div>
       </div> <!-- /div with the results -->
       <div class="row" ng-show="showResult && error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="danger" close="showResult=false; record=undefined">{{ error }}</alert>
+	  <alert class="text-center" type="danger" close="showResult=false; sentence=undefined">{{ error }}</alert>
 	</div>
       </div> <!-- /div with any HTTP errors -->
     </div> <!-- /container-fluid -->
@@ -87,24 +92,23 @@
       angular.module('formApp').controller("formController",
 	function($scope, $http) {
 		// Initialization
-		$scope.record = undefined;
+		$scope.sentence = undefined;
 		$scope.showResult = false;
 		$scope.error = false;
 
 		// Function attached to the "submit" button
 		$scope.submitForm = function() {
       			/* Form a request object */
-      			request = { record: $scope.record };
+      			request = { sentence: $scope.sentence };
 
 			// Send the request to the PHP script
-			$http.post("parse-log.php", request)
+			$http.post("word-match.php", request)
 			.success(function(data) {
 				// process the response
 				if (data["error"]) {
 					$scope.error = "Error: " + data["error"];
  				} else {
-					$scope.ip = data["ip"];
-					$scope.size = data["size"];
+					$scope.response = data["value"];
 					$scope.error = false;
 				}
 			})
