@@ -1,0 +1,25 @@
+
+
+	URLs
+	----
+
+	Part I		Script must be run from command line
+	Part II		http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign3/log-form.html
+	Part III	http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign3/word-form.html
+
+
+	FILES
+	-----
+	reg.php		Script from Part I
+
+	log-form.html	The HTML form from Part II
+
+	parse-log.php	The PHP script from Part II
+
+	req-{error,fail,succ}
+			Sample log records
+
+	word-form.html	The HTML form from Part III
+
+	word-match.php	The PHP script from Part III
+
