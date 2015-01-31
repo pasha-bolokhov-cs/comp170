@@ -1,15 +1,13 @@
 <!--
-  Assignment 3
-  Program name: log-form.html
+  Assignment 4
+  Program name: log-stat.html
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: January 24, 2015
-  Estimated Completion Time: 6 hr
-  Actual Completion Time: 12 hr
-  Description:
-	A form that accepts an httpd access log record, sends this record
-	to a PHP script and displays the answer
-  Invocation: http://URL/log-form.html
-  Requires: n/a
+  Date: Jan 30, 2014
+  Estimated Completion Time: 4 hr
+  Actual Completion Time: ## 
+  Description: ##
+  Invocation: ##
+  Requires: ##
 -->
 
 <html>
@@ -17,7 +15,7 @@
   <head>
     <!-- Title -->
     <title>
-      Log Record Parse Form
+      Apache Log Statistics
     </title>
 
     <!-- Bootstrap -->
@@ -29,53 +27,61 @@
   </head>
 
   <!-- Body -->
-  <body ng-app="formApp" ng-controller="formController">
+  <body ng-app="logApp" ng-controller="buttonController">
     <div class="container-fluid">
 
       <!-- Page Header -->
       <div class="row page-header">
 	<div class="col-xs-12">
-	  <h1>Log Record Parsing</h1>
+	  <h1>Apache Log Statistics</h1>
 	</div>
       </div>
 
-      <!-- Form -->
-      <div class="row">
+      <!-- Buttons -->
+      <div class="row" ng-cloak>
 	<div class="col-xs-12">
-	  <form novalidate name="form" ng-submit="submitForm()">
-
-	    <div class="row">
-	      <!-- Ask the log record -->
-	      <div class="col-xs-12 col-md-8">
-		<input type="text" placeholder="Type a log record" ng-model="record" class="form-control">
-	      </div>
-	      
-	      <!-- Button -->
-	      <div class="col-xs-3">
-		<button type="submit" class="btn btn-primary">
-		  <span class="glyphicon glyphicon-road"></span>
-		  &nbsp;Go
-		</button>
-	      </div>
-
-	    </div> <!-- /row -->
-	  </form>
+	  <div class="btn-group">
+	    <label class="btn btn-primary" ng-model="log_radio" ng-click="send(0)" btn-radio="'0'">
+	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+	      Current
+	    </label>
+	    <label class="btn btn-primary" ng-model="log_radio" ng-click="send(1)" btn-radio="'1'">
+	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+	      Log 1
+	    </label>
+	    <label class="btn btn-primary" ng-model="log_radio" ng-click="send(2)" btn-radio="'2'">
+	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+	      Log 2
+	    </label>
+	    <label class="btn btn-primary" ng-model="log_radio" ng-click="send(3)" btn-radio="'3'">
+	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+	      Log 3
+	    </label>
+	  </div>
 	</div> <!-- /col-xs-12 wrapping the form-->
       </div> <!-- /row -->
 
       <!-- Results -->
-      <div class="row" ng-show="showResult && !error" ng-cloak>
-	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="success" close="showResult=false; record=undefined">
-	    Parsed IP address <em>{{ ip }}</em> and size <em>{{ size }}</em>
-	  </alert>
-	</div>
-      </div> <!-- /div with the results -->
+      <hr ng-show="showResult">
       <div class="row" ng-show="showResult && error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="danger" close="showResult=false; record=undefined">{{ error }}</alert>
+	  <alert class="text-center" type="danger" close="showResult=false; results=[]">{{ error }}</alert>
 	</div>
       </div> <!-- /div with any HTTP errors -->
+      <div class="row" ng-show="showResult && !error" ng-cloak>
+	<div class="col-xs-12 col-md-8">
+	  <div class="well well-lg">
+	    <div ng-show="waiting" class="text-center">
+	      ...&nbsp;loading&nbsp;...
+	    </div>
+	    <ul>
+	      <li ng-repeat="ip in addresses">
+		Accessed from IP address <em>{{ ip }}</em> and downloaded <em>{{ results[ip] }}</em> bytes
+	      </li>
+	    </ul>
+	  </div>
+	</div>
+      </div> <!-- /div with the results -->
     </div> <!-- /container-fluid -->
 
     <!-- JQuery, Bootstrap, and Bootstrap UI -->
@@ -85,38 +91,50 @@
 
     <!-- Angular module and Controllers -->
     <script>
-      angular.module('formApp', ['ui.bootstrap']);
-      angular.module('formApp').controller("formController",
+      angular.module('logApp', ['ui.bootstrap']);
+      angular.module('logApp').controller("buttonController",
 	function($scope, $http) {
 		// Initialization
-		$scope.record = undefined;
+		$scope.log_radio = {
+			0: false,
+			1: false,
+			2: false,
+			3: false
+      		};
 		$scope.showResult = false;
 		$scope.error = false;
+      		$scope.addresses = [];
+$scope.waiting = false;
 
-		// Function attached to the "submit" button
-		$scope.submitForm = function() {
+		// Function attached to the buttons
+		$scope.send = function(log_index) {
+$scope.waiting = true;
+			/* Re-initialize */
+			$scope.error = false;
+			$scope.addresses = [];
+
       			/* Form a request object */
-      			request = { record: $scope.record };
+      			request = { log_no: log_index };
 
 			// Send the request to the PHP script
-			$http.post("parse-log.php", request)
+			$http.post("log-stat.php", request)
 			.success(function(data) {
 				// process the response
 				if (data["error"]) {
 					$scope.error = "Error: " + data["error"];
  				} else {
-					$scope.ip = data["ip"];
-					$scope.size = data["size"];
-					$scope.error = false;
+					$scope.results = data;
+      					$scope.addresses = Object.keys($scope.results);
 				}
 			})
 			.error(function(data, status) {
 				console.log(data);
 				$scope.error = "Error accessing the server: " + status + ".";
-			});
+			})
+.finally(function() { $scope.waiting = false; $scope.showResult = true; });
 
 			// Indicate that we have an answer
-			$scope.showResult = true;
+//			$scope.showResult = true;
 		}
       });
     </script>
