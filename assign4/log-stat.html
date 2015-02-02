@@ -4,14 +4,22 @@
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
   Date: Jan 30, 2014
   Estimated Completion Time: 4 hr
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Actual Completion Time: 8 hr 
+  Description:
+	A web form for analysis of the Apache log files. The user chooses
+	which log file to analyze - either the current one or one of the saved logs.
+	The download statistics per IP address is obtained
+	by invoking the "log-stat.php" script via a POST request
+  Invocation: http://URL/log-stat.html
+  Requires: n/a
 -->
 
 <html>
+  <!-- **** -->
+  <!--      -->
   <!-- Head -->
+  <!--      -->
+  <!-- **** -->
   <head>
     <!-- Title -->
     <title>
@@ -26,18 +34,32 @@
     <script src="angular.min.js"></script>
   </head>
 
+
+
+  <!-- **** -->
+  <!--      -->
   <!-- Body -->
+  <!--      -->
+  <!-- **** -->
   <body ng-app="logApp" ng-controller="buttonController">
     <div class="container-fluid">
 
+
+
+      <!----------------->
       <!-- Page Header -->
+      <!----------------->
       <div class="row page-header">
 	<div class="col-xs-12">
 	  <h1>Apache Log Statistics</h1>
 	</div>
       </div>
 
+
+
+      <!------------->
       <!-- Buttons -->
+      <!------------->
       <div class="row" ng-cloak>
 	<div class="col-xs-12">
 	  <div class="btn-group">
@@ -61,19 +83,31 @@
 	</div> <!-- /col-xs-12 wrapping the form-->
       </div> <!-- /row -->
 
+
+
+      <!------------->
       <!-- Results -->
-      <hr ng-show="showResult">
+      <!------------->
+
+      <!-- error message -->
+      <hr ng-show="showResult || waiting">
       <div class="row" ng-show="showResult && error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
 	  <alert class="text-center" type="danger" close="showResult=false; results=[]">{{ error }}</alert>
 	</div>
       </div> <!-- /div with any HTTP errors -->
+
+      <!-- ... loading ... -->
+      <div class="row" ng-show="waiting">
+	<div class="col-xs-12 col-md-8">
+	  <alert class="text-center" type="warning"><em>...&nbsp;loading&nbsp;...</em></alert>
+	</div>
+      </div> <!-- /div with ...loading... -->
+
+      <!-- actual results -->
       <div class="row" ng-show="showResult && !error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
 	  <div class="well well-lg">
-	    <div ng-show="waiting" class="text-center">
-	      ...&nbsp;loading&nbsp;...
-	    </div>
 	    <ul>
 	      <li ng-repeat="ip in addresses">
 		Accessed from IP address <em>{{ ip }}</em> and downloaded <em>{{ results[ip] }}</em> bytes
@@ -84,12 +118,16 @@
       </div> <!-- /div with the results -->
     </div> <!-- /container-fluid -->
 
+    <!----------------------------------------->
     <!-- JQuery, Bootstrap, and Bootstrap UI -->
+    <!----------------------------------------->
     <script src="jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="ui-bootstrap-tpls.min.js"></script>
 
+    <!------------------------------------>
     <!-- Angular module and Controllers -->
+    <!------------------------------------>
     <script>
       angular.module('logApp', ['ui.bootstrap']);
       angular.module('logApp').controller("buttonController",
@@ -104,14 +142,15 @@
 		$scope.showResult = false;
 		$scope.error = false;
       		$scope.addresses = [];
-$scope.waiting = false;
+		$scope.waiting = false;
 
 		// Function attached to the buttons
 		$scope.send = function(log_index) {
-$scope.waiting = true;
 			/* Re-initialize */
 			$scope.error = false;
 			$scope.addresses = [];
+			$scope.waiting = true;
+			$scope.showResult = false;
 
       			/* Form a request object */
       			request = { log_no: log_index };
@@ -131,11 +170,12 @@ $scope.waiting = true;
 				console.log(data);
 				$scope.error = "Error accessing the server: " + status + ".";
 			})
-.finally(function() { $scope.waiting = false; $scope.showResult = true; });
-
-			// Indicate that we have an answer
-//			$scope.showResult = true;
-		}
+			.finally(function() { 
+				// Indicate that we have an answer
+				$scope.waiting = false;
+				$scope.showResult = true;
+			});
+		}	/* send() */
       });
     </script>
   </body>

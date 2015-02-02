@@ -5,10 +5,16 @@
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
   Date: Jan 30, 2014
   Estimated Completion Time: 4 hr
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Actual Completion Time: 8 hr
+  Description:
+	A script which analyzes a particular Apache log file
+	and prints the download statistics per IP address in JSON format
+  Invocation: from the HTML form only
+  Requires: 
+	Variable "log_no" as part of data in JSON format sent via POST request.
+	The value of "log_no" equal to "0" corresponds to the current log,
+	the consequent ones (up to MAX_LOG_NO) correspond to the saved log files,
+	numberd according to their sorted alpha-numeric order
 */
 
 define("MAX_LOG_NO", 3);

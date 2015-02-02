@@ -1,0 +1,37 @@
+
+Pseudo Code
+-----------
+
+
+log-stat.php:
+
+	Read in the number of the log file
+
+	Validate the number
+
+	Find all log file names
+
+	Check that the received number does not exceed the list
+
+	Open the chosen file
+
+	Main reading loop:
+
+		Get the next line
+
+		Parse the IP address, status and size
+
+		If the request was not successful, put size to 0
+
+		Check if the size record makes sense
+
+		Add the size to the dictionary entry
+
+	Check whether the loop terminated due to an error:
+
+		indicate an error & exit
+
+	Close the log file
+
+	Send the collected statistics
+
