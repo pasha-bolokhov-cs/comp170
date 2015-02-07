@@ -1,0 +1,196 @@
+<!--
+  Assignment 5
+  Program name: ##
+  Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+  Date: ##
+  Estimated Completion Time: ##
+  Actual Completion Time: ## 
+  Description: ##
+  Invocation: ##
+  Requires: ##
+--> 
+<html>
+  <!-- **** -->
+  <!--      -->
+  <!-- Head -->
+  <!--      -->
+  <!-- **** -->
+  <head>
+    <!-- Title -->
+    <title>
+      SQL Query
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- AngularJS needs to be loaded in "head" section -->
+    <script src="angular.min.js"></script>
+  </head>
+
+
+
+  <!-- **** -->
+  <!--      -->
+  <!-- Body -->
+  <!--      -->
+  <!-- **** -->
+  <body ng-app="queryApp">
+    <div class="container-fluid">
+
+
+
+      <!----------------->
+      <!-- Page Header -->
+      <!----------------->
+      <div class="row page-header">
+	<div class="col-xs-12">
+	  <h1>SQL Query</h1>
+	</div>
+      </div>
+
+
+
+      <!-------------->
+      <!-- The form -->
+      <!-------------->
+      <div class="row" ng-cloak>
+	<div class="col-xs-12">
+	  <form ng-controller="formController" ng-submit="send()" name="sqlform" novalidate>
+
+	    <!-- Select -->
+	    <div class="row">
+	      <div class="col-xs-12 col-md-2 well well-sm text-center">select</div>
+	      <div class="col-xs-12 col-md-4">
+		<input type="text" placeholder="<what>" name="what" class="form-control">
+	      </div>
+	    </div> <!-- Select -->
+
+	    <!-- From -->
+	    <div class="row">
+	      <div class="col-xs-12 col-md-2 well well-sm text-center">from</div>
+	      <div class="col-xs-12 col-md-4">
+		<input type="text" placeholder="<tables>" name="from" class="form-control">
+	      </div>
+	    </div> <!-- From -->
+
+	    <!-- Where -->
+	    <div class="row">
+	      <div class="col-xs-12 col-md-2 well well-sm text-center">where</div>
+	      <div class="col-xs-12 col-md-4">
+		<input type="text" placeholder="<conditions>" name="where" class="form-control">
+	      </div>
+	    </div> <!-- Where -->
+
+	    <!-- Go -->
+	    <div class="row">
+	      <div class="col-xs-12 col-md-offset-2 col-md-3">
+		<button type="submit" class="btn btn-primary btn-lg">
+		  <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+		  &nbsp;Go
+		</button>
+	      </div>
+	    </div> <!-- Go -->
+	  </form>
+	</div> <!-- /col-xs-12 wrapping the form -->
+      </div> <!-- /row -->
+
+
+
+      <!------------->
+      <!-- Results -->
+      <!------------->
+
+      <!-- error message -->
+      <hr ng-show="showResult || waiting">
+      <div class="row" ng-show="showResult && error" ng-cloak>
+	<div class="col-xs-12 col-md-8">
+	  <alert class="text-center" type="danger" close="showResult=false; results=[]">{{ error }}</alert>
+	</div>
+      </div> <!-- /div with any HTTP errors -->
+
+      <!-- ... loading ... -->
+      <div class="row" ng-show="waiting">
+	<div class="col-xs-12 col-md-8">
+	  <alert class="text-center" type="warning"><em>...&nbsp;loading&nbsp;...</em></alert>
+	</div>
+      </div> <!-- /div with ...loading... -->
+
+      <!-- actual results -->
+      <div class="row" ng-show="showResult && !error" ng-cloak>
+	<div class="col-xs-12 col-md-8">
+	  <div class="well well-lg">
+	    <ul>
+	      <li ng-repeat="ip in addresses">
+		Accessed from IP address <em>{{ ip }}</em> and downloaded <em>{{ results[ip] }}</em> bytes
+	      </li>
+	    </ul>
+	  </div>
+	</div>
+      </div> <!-- /div with the results -->
+    </div> <!-- /container-fluid -->
+
+    <!----------------------------------------->
+    <!-- JQuery, Bootstrap, and Bootstrap UI -->
+    <!----------------------------------------->
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="ui-bootstrap-tpls.min.js"></script>
+
+    <!------------------------------------>
+    <!-- Angular module and Controllers -->
+    <!------------------------------------>
+    <script>
+      angular.module('queryApp', ['ui.bootstrap']);
+      angular.module('queryApp').controller("formController",
+	function($scope, $http) {
+		// Initialization
+		$scope.log_radio = {
+			0: false,
+			1: false,
+			2: false,
+			3: false
+      		};
+		$scope.showResult = false;
+		$scope.error = false;
+      		$scope.addresses = [];
+		$scope.waiting = false;
+
+		// Function attached to the buttons
+		$scope.send = function(log_index) {
+			/* Re-initialize */
+			$scope.error = false;
+			$scope.addresses = [];
+			$scope.waiting = true;
+			$scope.showResult = false;
+
+      			/* Form a request object */
+      			request = { log_no: log_index };
+
+			// Send the request to the PHP script
+			$http.post("log-stat.php", request)
+			.success(function(data) {
+				// process the response
+				if (data["error"]) {
+					$scope.error = "Error: " + data["error"];
+ 				} else {
+					$scope.results = data;
+      					$scope.addresses = Object.keys($scope.results);
+				}
+			})
+			.error(function(data, status) {
+				console.log(data);
+				$scope.error = "Error accessing the server: " + status + ".";
+			})
+			.finally(function() { 
+				// Indicate that we have an answer
+				$scope.waiting = false;
+				$scope.showResult = true;
+			});
+		}	/* send() */
+      });
+    </script>
+  </body>
+
+</html>
