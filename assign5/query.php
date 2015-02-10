@@ -21,7 +21,11 @@ $query = $data->query;
 
 /* validate the query */
 $query = htmlspecialchars(strip_tags(trim($query)));
-
+if (strpos($query, ';') !== FALSE) {
+	$response["error"] = "invalid query";
+	echo json_encode($response);
+	exit
+}
 
 
 /* open the file for read */

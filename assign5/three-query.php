@@ -56,7 +56,7 @@
       <!------------->
 <?php
 /* connect to the database */
-$mysqli = @new mysqli('localhost', '170user', 'phphasclass', 'comp170');
+require_once '../../../comp170-www/msqli_connect.php';
 
 if ($mysqli->connect_error) {
 	$error = 'Connect Error (' . $mysqli->connect_errno . ') '
@@ -64,7 +64,7 @@ if ($mysqli->connect_error) {
 	goto got_error;
 }
 
-$query = <<<"EOF_QUERY1"
+$query[0] = <<<"EOF_QUERY0"
 SELECT e.last_name AS "Last Name", 
        job_title AS "Job",
        department_id AS "Dept No", 
@@ -76,7 +76,25 @@ SELECT e.last_name AS "Last Name",
        INNER JOIN locations l
        ON (d.location_id = l.location_id)
        WHERE UPPER(l.city) LIKE 'SOUTHLAKE';
+EOF_QUERY0;
+
+$query[1] = <<<"EOF_QUERY1"
+SELECT e.last_name AS "Last Name",
+       d.department_name AS "Department"
+       FROM employees e LEFT OUTER JOIN departments d
+       USING (department_id)
+       WHERE UPPER(e.last_name) LIKE 'G%';
 EOF_QUERY1;
+
+$query[2] = <<<"EOF_QUERY2"
+SELECT e.last_name AS "Employee",
+       e.employee_id AS "Emp#",
+       m.last_name AS "Manager",
+       m.employee_id AS "Mgr#"
+       FROM employees e INNER JOIN employees m
+       ON (e.manager_id = m.employee_id)
+       WHERE UPPER(e.last_name) LIKE 'T%';
+EOF_QUERY2;
 
 /* do the query */
 if (($result = $mysqli->query($query)) === FALSE) {
