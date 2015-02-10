@@ -63,7 +63,7 @@
 	    <div class="row">
 	      <div class="col-xs-12 col-md-2 well well-sm text-center">select</div>
 	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<what>" name="what" class="form-control">
+		<input type="text" placeholder="<what>" ng-model="what" class="form-control">
 	      </div>
 	    </div> <!-- Select -->
 
@@ -71,7 +71,7 @@
 	    <div class="row">
 	      <div class="col-xs-12 col-md-2 well well-sm text-center">from</div>
 	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<tables>" name="from" class="form-control">
+		<input type="text" placeholder="<tables>" ng-model="from" class="form-control">
 	      </div>
 	    </div> <!-- From -->
 
@@ -79,7 +79,7 @@
 	    <div class="row">
 	      <div class="col-xs-12 col-md-2 well well-sm text-center">where</div>
 	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<conditions>" name="where" class="form-control">
+		<input type="text" placeholder="<conditions>" ng-model="where" class="form-control">
 	      </div>
 	    </div> <!-- Where -->
 
@@ -150,11 +150,13 @@
 		$scope.error = false;
 		$scope.waiting = false;
 
+		// Data Initialization
+		$scope.request = {};
+
 		// Function attached to the buttons
 		$scope.send = function(log_index) {
 			/* Re-initialize */
 			$scope.error = false;
-			$scope.addresses = [];
 			$scope.waiting = true;
 			$scope.showResult = false;
 
