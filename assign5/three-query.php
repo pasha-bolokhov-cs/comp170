@@ -77,7 +77,7 @@ SELECT e.last_name AS "Last Name",
        ON (d.location_id = l.location_id)
        WHERE UPPER(l.city) LIKE 'SOUTHLAKE';
 EOF_QUERY0;
-$title[0] = "Who works in Southlake";
+$title[0] = "Who works in Southlake?";
 $table_head[0] = <<<"HEAD0"
   			<th>Last Name</th>
   			<th>Job</th>
@@ -93,7 +93,11 @@ SELECT e.last_name AS "Last Name",
        USING (department_id)
        WHERE UPPER(e.last_name) LIKE 'G%';
 EOF_QUERY1;
-$title[1] = "Whose name starts with `G'";
+$title[1] = "Whose name starts with `G'?";
+$table_head[1] = <<<"HEAD1"
+			<th>Last Name</th>
+			<th>Department</th>
+HEAD1;
 
 $query[2] = <<<"EOF_QUERY2"
 SELECT e.last_name AS "Employee",
@@ -105,6 +109,12 @@ SELECT e.last_name AS "Employee",
        WHERE UPPER(e.last_name) LIKE 'T%';
 EOF_QUERY2;
 $title[2] = "Bosses of those whose names start with `G'";
+$table_head[2] = <<<"HEAD2"
+			<th>Employee</th>
+			<th>Employee No</th>
+			<th>Manager</th>
+			<th>Manager No</th>
+HEAD2;
 
 for ($i = 0; $i < count($query); $i++) {
 	/* do the query */
@@ -124,33 +134,46 @@ for ($i = 0; $i < count($query); $i++) {
               <table class="table">
   	        <thead>
   		  <tr>
-<?php
-	switch($i) {
-	case 0:
-		break;
-
-	case 1:
-		echo <<<"HEAD1"
-HEAD1;
-		break;
-
-	case 2:
-?>
+<?php echo $table_head[$i];?>
   		  </tr>
   	        </thead>
   	        <tbody>
 <?php
 	/* print the results */
 	while ($row = $result->fetch_assoc()) {
-		echo <<<"TAB_END0"
-	<tr>
-		<td> {$row["Last Name"]} </td>
-		<td> {$row["Job"]} </td>
-		<td> {$row["Dept No"]} </td>
-		<td> {$row["Department"]} </td>
-	</tr>
+		switch ($i) {
+		case 0:
+			echo <<<"TAB_END0"
+				<tr>
+					<td> {$row["Last Name"]} </td>
+					<td> {$row["Job"]} </td>
+					<td> {$row["Dept No"]} </td>
+					<td> {$row["Department"]} </td>
+				</tr>
 TAB_END0;
-	}
+		break;
+
+		case 1:
+			echo<<<"TAB_END1"
+				<tr>
+					<td> {$row["Last Name"]} </td>
+					<td> {$row["Department"]} </td>
+				</tr>
+TAB_END1;
+		break;
+
+		case 2:
+			echo <<<"TAB_END2"
+				<tr>
+					<td> {$row["Employee"]} </td>
+					<td> {$row["Emp#"]} </td>
+					<td> {$row["Manager"]} </td>
+					<td> {$row["Mgr#"]} </td>
+				</tr>
+TAB_END2;
+		break;
+		} // switch($i)
+	} // while ($row)
 ?>
 	        </tbody>
               </table>
@@ -170,12 +193,17 @@ got_error: // report an error
 quit:
 ?>
 
+      <div class="row">
+	<div class="col-xs-12">
+	  <hr>
+	  <h1>End of Queries
+	</div>
+      </div>
+
 
     </div> <!-- /container-fluid -->
 
 
-    <hr>
-    <h1>End</h1>
 
     <!----------------------------------------->
     <!-- JQuery, Bootstrap, and Bootstrap UI -->
