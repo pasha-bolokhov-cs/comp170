@@ -28,6 +28,10 @@ if (strpos($query, ';') !== FALSE) {
 }
 
 
+/* connect to the database */
+require_once '../../../comp170-www/msqli_connect.php';
+
+
 /* open the file for read */
 if (($log = @fopen($log_files[$log_no], "r")) === FALSE) {
 	$response["error"] = "couldn't access log file";

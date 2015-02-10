@@ -36,7 +36,7 @@
   <!-- Body -->
   <!--      -->
   <!-- **** -->
-  <body ng-app="queryApp">
+  <body ng-app="queryApp" ng-controller="queryController">
     <div class="container-fluid">
 
 
@@ -57,13 +57,13 @@
       <!-------------->
       <div class="row" ng-cloak>
 	<div class="col-xs-12">
-	  <form ng-controller="formController" ng-submit="send()" name="sqlform" novalidate>
+	  <form ng-submit="send()" name="sqlform" novalidate>
 
 	    <!-- Select -->
 	    <div class="row">
 	      <div class="col-xs-12 col-md-2 well well-sm text-center">select</div>
 	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<what>" ng-model="what" class="form-control">
+		<input type="text" placeholder="<what>" ng-model="request.what" class="form-control">
 	      </div>
 	    </div> <!-- Select -->
 
@@ -71,7 +71,7 @@
 	    <div class="row">
 	      <div class="col-xs-12 col-md-2 well well-sm text-center">from</div>
 	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<tables>" ng-model="from" class="form-control">
+		<input type="text" placeholder="<tables>" ng-model="request.from" class="form-control">
 	      </div>
 	    </div> <!-- From -->
 
@@ -79,7 +79,7 @@
 	    <div class="row">
 	      <div class="col-xs-12 col-md-2 well well-sm text-center">where</div>
 	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<conditions>" ng-model="where" class="form-control">
+		<input type="text" placeholder="<conditions>" ng-model="request.where" class="form-control">
 	      </div>
 	    </div> <!-- Where -->
 
@@ -106,7 +106,7 @@
       <hr ng-show="showResult || waiting">
       <div class="row" ng-show="showResult && error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="danger" close="showResult=false; results=[]">{{ error }}</alert>
+	  <alert class="text-center" type="danger" close="showResult = false">{{ error }}</alert>
 	</div>
       </div> <!-- /div with any HTTP errors -->
 
@@ -121,11 +121,7 @@
       <div class="row" ng-show="showResult && !error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
 	  <div class="well well-lg">
-	    <ul>
-	      <li ng-repeat="ip in addresses">
-		Accessed from IP address <em>{{ ip }}</em> and downloaded <em>{{ results[ip] }}</em> bytes
-	      </li>
-	    </ul>
+	    <pre>{{ results }}</pre>
 	  </div>
 	</div>
       </div> <!-- /div with the results -->
@@ -143,7 +139,7 @@
     <!------------------------------------>
     <script>
       angular.module('queryApp', ['ui.bootstrap']);
-      angular.module('queryApp').controller("formController",
+      angular.module('queryApp').controller("queryController",
 	function($scope, $http) {
 		// Initialization
 		$scope.showResult = false;
@@ -152,38 +148,44 @@
 
 		// Data Initialization
 		$scope.request = {};
+		$scope.results = undefined;
 
 		// Function attached to the buttons
-		$scope.send = function(log_index) {
-			/* Re-initialize */
-			$scope.error = false;
-			$scope.waiting = true;
-			$scope.showResult = false;
+//		$scope.send = function() {
+//			/* Re-initialize */
+//			$scope.error = false;
+//			$scope.waiting = true;
+//			$scope.showResult = false;
+//
+//			/* Request object is ready to send */
+//
+//			// Send the request to the PHP script
+//			$http.post("query.php", $scope.request)
+//			.success(function(data) {
+//				// process the response
+//				if (data["error"]) {
+//					$scope.error = "Error: " + data["error"];
+// 				} else {
+//					$scope.results = data.response ? data.response : undefined;
+//				}
+//			})
+//			.error(function(data, status) {
+//				console.log(data);
+//				$scope.error = "Error accessing the server: " + status + ".";
+//			})
+//			.finally(function() { 
+//				// Indicate that we have an answer
+//				$scope.waiting = false;
+//				$scope.showResult = true;
+//			});
+//		}	/* send() */
 
-      			/* Form a request object */
-      			request = { log_no: log_index };
-
-			// Send the request to the PHP script
-			$http.post("query.php", request)
-			.success(function(data) {
-				// process the response
-				if (data["error"]) {
-					$scope.error = "Error: " + data["error"];
- 				} else {
-					$scope.results = data;
-      					$scope.addresses = Object.keys($scope.results);
-				}
-			})
-			.error(function(data, status) {
-				console.log(data);
-				$scope.error = "Error accessing the server: " + status + ".";
-			})
-			.finally(function() { 
-				// Indicate that we have an answer
-				$scope.waiting = false;
-				$scope.showResult = true;
-			});
-		}	/* send() */
+$scope.send = function() {
+	$scope.results = "Test results\nCan't you see?\nMany lines";
+	$scope.showResult = true;
+	$scope.waiting = false;
+	$scope.error = false;
+	}
       });
     </script>
   </body>
