@@ -146,15 +146,8 @@
       angular.module('queryApp').controller("formController",
 	function($scope, $http) {
 		// Initialization
-		$scope.log_radio = {
-			0: false,
-			1: false,
-			2: false,
-			3: false
-      		};
 		$scope.showResult = false;
 		$scope.error = false;
-      		$scope.addresses = [];
 		$scope.waiting = false;
 
 		// Function attached to the buttons
@@ -169,7 +162,7 @@
       			request = { log_no: log_index };
 
 			// Send the request to the PHP script
-			$http.post("log-stat.php", request)
+			$http.post("query.php", request)
 			.success(function(data) {
 				// process the response
 				if (data["error"]) {
