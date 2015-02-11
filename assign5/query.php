@@ -9,28 +9,35 @@
   Description: ##
   Invocation: ##
   Requires:
-	Variable "log_no" as part of data in JSON format sent via POST request.
+	Variable ######## as part of data in JSON format sent via POST request.
 */ 
 
 
 /* get the query from JSON data */
 $jsonData = file_get_contents("php://input");
 $data = json_decode($jsonData);
-$query = $data->query;
+$what = $data->what;
+$from = $data->from;
+$where = $data->where;
 
 
 /* validate the query */
-$query = htmlspecialchars(strip_tags(trim($query)));
-if (strpos($query, ';') !== FALSE) {
+$what = htmlspecialchars(strip_tags(trim($what)));
+$from = htmlspecialchars(strip_tags(trim($from)));
+$where = htmlspecialchars(strip_tags(trim($where)));
+if (strpos($what, ';') !== FALSE ||		// We really only can check for semicolon
+    strpos($from, ';') !== FALSE ||		// Anything else formally is allowed in a query
+    strpos($where, ';') !== FALSE) {
 	$response["error"] = "invalid query";
 	echo json_encode($response);
 	exit
 }
 
+/* form the query string */
+$query = "SELECT $what FROM $from WHERE $where;";
 
 /* connect to the database */
 require_once '../../../comp170-www/msqli_connect.php';
-
 
 /* open the file for read */
 if (($log = @fopen($log_files[$log_no], "r")) === FALSE) {

@@ -151,41 +151,35 @@
 		$scope.results = undefined;
 
 		// Function attached to the buttons
-//		$scope.send = function() {
-//			/* Re-initialize */
-//			$scope.error = false;
-//			$scope.waiting = true;
-//			$scope.showResult = false;
-//
-//			/* Request object is ready to send */
-//
-//			// Send the request to the PHP script
-//			$http.post("query.php", $scope.request)
-//			.success(function(data) {
-//				// process the response
-//				if (data["error"]) {
-//					$scope.error = "Error: " + data["error"];
-// 				} else {
-//					$scope.results = data.response ? data.response : undefined;
-//				}
-//			})
-//			.error(function(data, status) {
-//				console.log(data);
-//				$scope.error = "Error accessing the server: " + status + ".";
-//			})
-//			.finally(function() { 
-//				// Indicate that we have an answer
-//				$scope.waiting = false;
-//				$scope.showResult = true;
-//			});
-//		}	/* send() */
+		$scope.send = function() {
+			/* Re-initialize */
+			$scope.error = false;
+			$scope.waiting = true;
+			$scope.showResult = false;
 
-$scope.send = function() {
-	$scope.results = "Test results\nCan't you see?\nMany lines";
-	$scope.showResult = true;
-	$scope.waiting = false;
-	$scope.error = false;
-	}
+			/* Request object is ready to send */
+
+			// Send the request to the PHP script
+			$http.post("query.php", $scope.request)
+			.success(function(data) {
+				// process the response
+				if (data["error"]) {
+					$scope.error = "Error: " + data["error"];
+ 				} else {
+					$scope.results = data.response ? data.response : undefined;
+				}
+			})
+			.error(function(data, status) {
+				console.log(data);
+				$scope.error = "Error accessing the server: " + status + ".";
+			})
+			.finally(function() { 
+				// Indicate that we have an answer
+				$scope.waiting = false;
+				$scope.showResult = true;
+			});
+		}	/* send() */
+
       });
     </script>
   </body>
