@@ -1,13 +1,15 @@
 <!--
   Assignment 5
-  Program name: ##
+  Program name: three-query.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: ##
-  Estimated Completion Time: ##
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Date: February 10, 2015
+  Estimated Completion Time: 6 hr
+  Actual Completion Time: 16 hr
+  Description:
+	Sends three queries to 'mysqld' and displays the result
+  Invocation: via URL
+  Requires: 
+	File 'mysqli_connect.php' must be sitting at the appropriate path
 --> 
 <html>
   <!-- **** -->

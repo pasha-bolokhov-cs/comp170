@@ -1,15 +1,20 @@
 <?php
 /* 
   Assignment 5
-  Program name: ##
+  Program name: query.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: ##
-  Estimated Completion Time: ##
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
+  Date: February 10, 2015
+  Estimated Completion Time: 6 hr
+  Actual Completion Time: 16 hr
+  Description:
+	A script which takes the form input from 'query.html', forms a MySQL query
+	and runs the query to a MySQL database
+  Invocation: via POST request only
   Requires:
-	Variable ######## as part of data in JSON format sent via POST request.
+	Variables "what", "from" and optional "where" as part of data 
+	in JSON format sent via POST request.
+
+	File 'mysqli_connect.php' must be sitting at the appropriate path
 */ 
 
 /* Cancel very long responses */
@@ -72,7 +77,7 @@ foreach ($fields as $field) {
 	$response["headers"][] = $field->name;
 }
 
-/* encode the results */
+/* pack the results */
 $response["data"] = array();
 while ($row = $result->fetch_assoc()) {
 	// append the row

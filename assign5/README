@@ -26,3 +26,4 @@
 
 	mysqli_connect.php	Authentication. Not attached. Contains on line:
 	$mysqli = @new mysqli(<HOST>, <USER>, <PASS>, <DATABASE>);
+
