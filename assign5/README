@@ -1,0 +1,28 @@
+
+	Additional answer
+	-----------------
+
+	Not all queries work in traditional (Oracle) SQL (the outer join does not).
+
+
+	URLS
+	----
+	
+	Part 1 - http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign5/three-query.php
+
+	Part 2 - http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign5/query.html
+
+
+	FILES
+	-----
+	
+	p-code			pseudo code
+
+	three-query.php		Part 1 program
+
+	query.html		Part 2 - HTML form
+
+	query.php		Part 2 - PHP program
+
+	mysqli_connect.php	Authentication. Not attached. Contains on line:
+	$mysqli = @new mysqli(<HOST>, <USER>, <PASS>, <DATABASE>);

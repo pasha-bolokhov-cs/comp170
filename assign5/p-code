@@ -1,0 +1,52 @@
+
+Pseudo Code
+-----------
+
+
+three-query.php:
+
+	connect to the database
+
+	form query strings
+
+	loop over queries
+
+		do a query
+
+		form a table header
+
+		loop over rows
+
+			print current row cell by cell
+
+	close connection
+
+
+
+
+query.php:
+
+	get the query from JSON data
+
+	check that "what" and "from" fields are provided
+
+	validate the query data
+
+	form the query string
+
+	connect to the database
+
+	send the query
+
+	get the headers from the reply
+
+	loop over rows
+
+		pack the current row
+
+		check if too many rows now
+
+	close the access to the database
+
+	return the response
+
