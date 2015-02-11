@@ -40,11 +40,17 @@ $what = strip_tags(trim($what));
 $from = strip_tags(trim($from));
 $where = strip_tags(trim($where));
 if (strpos($what, ';') !== FALSE ||		// We really only can check for semicolon
-    strpos($from, ';') !== FALSE ||		// Anything else formally is allowed in a query
+    strpos($from, ';') !== FALSE ||		// Other characters may be needed in the query
     strpos($where, ';') !== FALSE) {
 	$response["error"] = "invalid query";
 	goto quit;
 }
+if (preg_match('/\b(SELECT)|(SET)|(UNION)|(UPDATE)|(INSERT)|(ALTER)|(CREATE)\b/i', 
+    $what . " " . $from . " " . $where)) {
+	$response["error"] = "forbidden term in query";
+	goto quit;
+}
+
 
 /* form the query string */
 $query = $where != "" ? "SELECT $what FROM $from WHERE $where;"
