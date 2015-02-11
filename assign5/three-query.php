@@ -78,12 +78,7 @@ SELECT e.last_name AS "Last Name",
        WHERE UPPER(l.city) LIKE 'SOUTHLAKE';
 EOF_QUERY0;
 $title[0] = "Who works in Southlake?";
-$table_head[0] = <<<"HEAD0"
-  			<th>Last Name</th>
-  			<th>Job</th>
-  			<th>Department No</th>
-  			<th>Department</th>
-HEAD0;
+$headers[0] = array("Last Name", "Job", "Dept No", "Department");
 
 
 $query[1] = <<<"EOF_QUERY1"
@@ -94,10 +89,8 @@ SELECT e.last_name AS "Last Name",
        WHERE UPPER(e.last_name) LIKE 'G%';
 EOF_QUERY1;
 $title[1] = "Whose name starts with `G'?";
-$table_head[1] = <<<"HEAD1"
-			<th>Last Name</th>
-			<th>Department</th>
-HEAD1;
+$headers[1] = array("Last Name", "Department");
+
 
 $query[2] = <<<"EOF_QUERY2"
 SELECT e.last_name AS "Employee",
@@ -109,13 +102,9 @@ SELECT e.last_name AS "Employee",
        WHERE UPPER(e.last_name) LIKE 'T%';
 EOF_QUERY2;
 $title[2] = "Bosses of those whose names start with `G'";
-$table_head[2] = <<<"HEAD2"
-			<th>Employee</th>
-			<th>Employee No</th>
-			<th>Manager</th>
-			<th>Manager No</th>
-HEAD2;
+$headers[2] = array("Employee", "Emp#", "Manager", "Mgr#");
 
+/* loop over the queries */
 for ($i = 0; $i < count($query); $i++) {
 	/* do the query */
 	if (($result = $mysqli->query($query[$i])) === FALSE) {
@@ -134,45 +123,23 @@ for ($i = 0; $i < count($query); $i++) {
               <table class="table">
   	        <thead>
   		  <tr>
-<?php echo $table_head[$i];?>
+<?php
+	/* print the table header */
+	for ($j = 0; $j < count($headers[$i]); $j++) {
+		echo "<th> {$headers[$i][$j]} </th>";
+	}
+?>
   		  </tr>
   	        </thead>
   	        <tbody>
 <?php
 	/* print the results */
 	while ($row = $result->fetch_assoc()) {
-		switch ($i) {
-		case 0:
-			echo <<<"TAB_END0"
-				<tr>
-					<td> {$row["Last Name"]} </td>
-					<td> {$row["Job"]} </td>
-					<td> {$row["Dept No"]} </td>
-					<td> {$row["Department"]} </td>
-				</tr>
-TAB_END0;
-		break;
-
-		case 1:
-			echo<<<"TAB_END1"
-				<tr>
-					<td> {$row["Last Name"]} </td>
-					<td> {$row["Department"]} </td>
-				</tr>
-TAB_END1;
-		break;
-
-		case 2:
-			echo <<<"TAB_END2"
-				<tr>
-					<td> {$row["Employee"]} </td>
-					<td> {$row["Emp#"]} </td>
-					<td> {$row["Manager"]} </td>
-					<td> {$row["Mgr#"]} </td>
-				</tr>
-TAB_END2;
-		break;
-		} // switch($i)
+		echo "<tr>";
+		for ($j = 0; $j < count($headers[$i]); $j++) {
+			echo "<td> {$row[$headers[$i][$j]]} </td>";
+		}
+		echo "</tr>";
 	} // while ($row)
 ?>
 	        </tbody>
