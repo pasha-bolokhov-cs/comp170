@@ -12,6 +12,8 @@
 	Variable ######## as part of data in JSON format sent via POST request.
 */ 
 
+/* Cancel very long responses */
+define("MAX_RESPONSE_LINES", 1000);
 
 /* get the query from JSON data */
 $jsonData = file_get_contents("php://input");
@@ -21,8 +23,7 @@ $data = json_decode($jsonData);
 if (!array_key_exists("what", $data) || 
     !array_key_exists("from", $data)) {
 	$response["error"] = "query misses 'what' or 'from'";
-	echo json_encode($response);
-	exit;
+	goto quit;
 }
 $what = $data->what;
 $from = $data->from;
@@ -42,8 +43,7 @@ if (strpos($what, ';') !== FALSE ||		// We really only can check for semicolon
     strpos($from, ';') !== FALSE ||		// Anything else formally is allowed in a query
     strpos($where, ';') !== FALSE) {
 	$response["error"] = "invalid query";
-	echo json_encode($response);
-	exit;
+	goto quit;
 }
 
 /* form the query string */
@@ -56,31 +56,36 @@ require_once '../../../comp170-www/msqli_connect.php';
 /* do the query */
 if (($result = $mysqli->query($query)) === FALSE) {
 	$response["error"] = 'Query Error (' . $mysqli->error . ') ';
-	$mysqli->close();
-	echo json_encode($response);
-	exit;
+	goto database_quit;
+}
+
+/* get the headers */
+$response["headers"] = array();
+$fields = $result->fetch_fields();
+foreach ($fields as $field) {
+	$response["headers"][] = $field->name;
 }
 
 /* encode the results */
-$response["headers"] = array();
 $response["data"] = array();
-for ($i = 0; $row = $result->fetch_assoc(); $i++) {
-	// get the headers on the first run
-	if ($i == 1) {
-		foreach ($row as $key => $value) {
-			$response["headers"][] = $key;
-		}
-	}
-
+while ($row = $result->fetch_assoc()) {
 	// append the row
 	$response["data"][] = $row;
 
+	// check how many lines we have
+	if (count($response["data"]) > MAX_RESPONSE_LINES) {
+		$response["data"] = NULL;
+		$response["error"] = "response too large (over " . MAX_RESPONSE_LINES . " lines)";
+		goto database_quit;
+	}
 }
 
 
+database_quit:
 /* close the database */
 $mysqli->close();
 
+quit:
 /* return the response */
 echo json_encode($response);
 ?>
