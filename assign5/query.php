@@ -16,10 +16,23 @@
 /* get the query from JSON data */
 $jsonData = file_get_contents("php://input");
 $data = json_decode($jsonData);
+
+/* check that have "what" and "from" fields */
+if (!array_key_exists("what", $data) || 
+    !array_key_exists("from", $data)) {
+	$response["error"] = "invalid query";
+	echo json_encode($response);
+	exit;
+}
 $what = $data->what;
 $from = $data->from;
-$where = $data->where;
 
+/* substitute "where" with blank if not specified */
+if (!array_key_exists("where", $data)) {
+	$where = "";
+} else {
+	$where = $data->where;
+}
 
 /* validate the query */
 $what = htmlspecialchars(strip_tags(trim($what)));
@@ -30,67 +43,44 @@ if (strpos($what, ';') !== FALSE ||		// We really only can check for semicolon
     strpos($where, ';') !== FALSE) {
 	$response["error"] = "invalid query";
 	echo json_encode($response);
-	exit
+	exit;
 }
 
 /* form the query string */
-$query = "SELECT $what FROM $from WHERE $where;";
+$query = $where != "" ? "SELECT $what FROM $from WHERE $where;"
+		      : "SELECT $what FROM $from;";
 
 /* connect to the database */
 require_once '../../../comp170-www/msqli_connect.php';
 
-/* open the file for read */
-if (($log = @fopen($log_files[$log_no], "r")) === FALSE) {
-	$response["error"] = "couldn't access log file";
+/* do the query */
+if (($result = $mysqli->query($query)) === FALSE) {
+	$response["error"] = 'Query Error (' . $mysqli->error . ') ';
+	$mysqli->close();
 	echo json_encode($response);
 	exit;
 }
 
-/* main reading loop */
-$stat = array();
-while (($record = fgets($log, 4096)) !== FALSE) {
-	/* parse the IP address, the status and the response size from the record */
-	if (preg_match_all('/^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+[^"]*"[^"]*"\s+(\d+)\s([0-9\-]+)\s/',
-			   $record, $matches, PREG_PATTERN_ORDER)) {
-		$ip = $matches[1][0];
-		$status = $matches[2][0];
-		$size = $matches[3][0];
-	} else {
-		$response["error"] = "pattern match";
-		echo json_encode($response);
-		exit;
-	}
-	
-	/* check if the request was not successful (success = 2xx) */
-	if ($status[0] != '2') {
-		$size = 0;		// Unsuccessful requests default to zero size
+/* encode the results */
+$response["headers"] = array();
+$response["data"] = array();
+for ($i = 0; $row = $result->fetch_assoc(); $i++) {
+	// get the headers on the first run
+	if ($i == 1) {
+		foreach ($row as $key => $value) {
+			$response["headers"][] = $key;
+		}
 	}
 
-	/* check if the size makes sense */
-	if (!is_numeric($size)) {
-		$size = 0;
-	}
+	// append the row
+	$response["data"][] = $row;
 
-	/* collect the statistics */
-	if (!array_key_exists($ip, $stat)) {
-		$stat[$ip] = $size;
-	} else {
-		$stat[$ip] += $size;
-	}
 }
 
-/* check if stopped due to an error */
-if (!feof($log)) {
-	$response["error"] = "reading log file";
-	echo json_encode($response);
-	exit;
-}
 
-/* ignore errors on fclose() */
-@fclose($log);
+/* close the database */
+$mysqli->close();
 
 /* return the response */
-$response = $stat;
 echo json_encode($response);
-
 ?>

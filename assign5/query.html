@@ -106,9 +106,9 @@
       <hr ng-show="showResult || waiting">
       <div class="row" ng-show="showResult && error" ng-cloak>
 	<div class="col-xs-12 col-md-8">
-	  <alert class="text-center" type="danger" close="showResult = false">{{ error }}</alert>
+	  <alert class="text-center" type="danger" close="reset()">{{ error }}</alert>
 	</div>
-      </div> <!-- /div with any HTTP errors -->
+      </div> <!-- /div with any errors -->
 
       <!-- ... loading ... -->
       <div class="row" ng-show="waiting">
@@ -119,10 +119,23 @@
 
       <!-- actual results -->
       <div class="row" ng-show="showResult && !error" ng-cloak>
-	<div class="col-xs-12 col-md-8">
-	  <div class="well well-lg">
-	    <pre>{{ results }}</pre>
-	  </div>
+	<div class="col-xs-12 col-md-10">
+          <table class="table">
+	    <thead>
+	      <tr>
+		<th ng-repeat="h in headers">
+		  {{ h }}
+		</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="row in results">
+		<td ng-repeat="h in headers">
+		  {{ getColumn(h, row) }}
+		</td>
+	      </tr>
+	    </tbody>
+          </table>
 	</div>
       </div> <!-- /div with the results -->
     </div> <!-- /container-fluid -->
@@ -141,14 +154,24 @@
       angular.module('queryApp', ['ui.bootstrap']);
       angular.module('queryApp').controller("queryController",
 	function($scope, $http) {
-		// Initialization
-		$scope.showResult = false;
-		$scope.error = false;
-		$scope.waiting = false;
 
-		// Data Initialization
-		$scope.request = {};
-		$scope.results = undefined;
+		// Resettable data initialization
+		$scope.reset = function() {
+			// Initialization
+			$scope.showResult = false;
+			$scope.error = false;
+			$scope.waiting = false;
+	
+			// Data Initialization
+			$scope.request = {};
+			$scope.results = undefined;
+		}
+		$scope.reset();
+
+		// Function to be used for a nested 'ng-repeat'
+		$scope.getColumn = function(header, row) {
+			return row[header];
+		}
 
 		// Function attached to the buttons
 		$scope.send = function() {
@@ -166,7 +189,8 @@
 				if (data["error"]) {
 					$scope.error = "Error: " + data["error"];
  				} else {
-					$scope.results = data.response ? data.response : undefined;
+					$scope.results = data["data"];
+					$scope.headers = data["headers"];
 				}
 			})
 			.error(function(data, status) {
