@@ -20,7 +20,7 @@ $data = json_decode($jsonData);
 /* check that have "what" and "from" fields */
 if (!array_key_exists("what", $data) || 
     !array_key_exists("from", $data)) {
-	$response["error"] = "invalid query";
+	$response["error"] = "query misses 'what' or 'from'";
 	echo json_encode($response);
 	exit;
 }
@@ -35,9 +35,9 @@ if (!array_key_exists("where", $data)) {
 }
 
 /* validate the query */
-$what = htmlspecialchars(strip_tags(trim($what)));
-$from = htmlspecialchars(strip_tags(trim($from)));
-$where = htmlspecialchars(strip_tags(trim($where)));
+$what = strip_tags(trim($what));
+$from = strip_tags(trim($from));
+$where = strip_tags(trim($where));
 if (strpos($what, ';') !== FALSE ||		// We really only can check for semicolon
     strpos($from, ';') !== FALSE ||		// Anything else formally is allowed in a query
     strpos($where, ';') !== FALSE) {
