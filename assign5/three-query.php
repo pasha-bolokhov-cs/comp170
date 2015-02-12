@@ -6,7 +6,7 @@
   Estimated Completion Time: 6 hr
   Actual Completion Time: 16 hr
   Description:
-	Sends three queries to 'mysqld' and displays the result
+	Sends three queries (both Traditional and SQL'92) to 'mysqld' and displays the result
   Invocation: via URL
   Requires: 
 	File 'mysqli_connect.php' must be sitting at the appropriate path
