@@ -48,7 +48,7 @@
       <!----------------->
       <div class="row page-header">
 	<div class="col-xs-12">
-	  <h1>Three MySQL queries
+	  <h1>Three MySQL queries</h1>
 	</div>
       </div>
 
@@ -66,7 +66,11 @@ if ($mysqli->connect_error) {
 	goto got_error;
 }
 
-$query[0] = <<<"EOF_QUERY0"
+$query = array();
+$title = array();
+$headers = array();
+
+$query[] = <<<"EOF_SOUTHLAKE"
 SELECT e.last_name AS "Last Name", 
        job_title AS "Job",
        department_id AS "Dept No", 
@@ -78,23 +82,48 @@ SELECT e.last_name AS "Last Name",
        INNER JOIN locations l
        ON (d.location_id = l.location_id)
        WHERE UPPER(l.city) LIKE 'SOUTHLAKE';
-EOF_QUERY0;
-$title[0] = "Who works in Southlake?";
-$headers[0] = array("Last Name", "Job", "Dept No", "Department");
+EOF_SOUTHLAKE;
+$title[] = "Who works in Southlake?";
+$headers[] = array("Last Name", "Job", "Dept No", "Department");
 
 
-$query[1] = <<<"EOF_QUERY1"
+$query[] = <<<"EOF_SOUTHLAKE_TRAD"
+SELECT e.last_name AS "Last Name",
+       j.job_title AS "Job",
+       e.department_id AS "Dept No", 
+       d.department_name AS "Department"
+       FROM employees e, departments d, jobs j, locations l
+       WHERE e.department_id = d.department_id
+       AND e.job_id = j.job_id
+       AND d.location_id = l.location_id
+       AND UPPER(l.city) LIKE 'SOUTHLAKE';
+EOF_SOUTHLAKE_TRAD;
+$title[] = "Who works in Southlake? (Traditional)";
+$headers[] = array("Last Name", "Job", "Dept No", "Department");
+
+
+$query[] = <<<"EOF_G"
 SELECT e.last_name AS "Last Name",
        d.department_name AS "Department"
        FROM employees e LEFT OUTER JOIN departments d
        USING (department_id)
        WHERE UPPER(e.last_name) LIKE 'G%';
-EOF_QUERY1;
-$title[1] = "Whose name starts with `G'?";
-$headers[1] = array("Last Name", "Department");
+EOF_G;
+$title[] = "Whose name starts with `G'?";
+$headers[] = array("Last Name", "Department");
+
+$query[] = <<<"EOF_G_TRAD"
+SELECT e.last_name AS "Last Name",
+       d.department_name AS "Department"
+       FROM employees e, departments d
+       WHERE (e.department_id = d.department_id(+))
+       AND UPPER(e.last_name) LIKE 'G%';
+EOF_G_TRAD;
+$title[] = "Whose name starts with `G'? (Traditional)";
+$headers[] = array("Last Name", "Department");
 
 
-$query[2] = <<<"EOF_QUERY2"
+$query[] = <<<"EOF_BOSSES"
 SELECT e.last_name AS "Employee",
        e.employee_id AS "Emp#",
        m.last_name AS "Manager",
@@ -102,18 +131,44 @@ SELECT e.last_name AS "Employee",
        FROM employees e INNER JOIN employees m
        ON (e.manager_id = m.employee_id)
        WHERE UPPER(e.last_name) LIKE 'T%';
-EOF_QUERY2;
-$title[2] = "Bosses of those whose names start with `G'";
-$headers[2] = array("Employee", "Emp#", "Manager", "Mgr#");
+EOF_BOSSES;
+$title[] = "Bosses of those whose names start with `G'";
+$headers[] = array("Employee", "Emp#", "Manager", "Mgr#");
+
+
+$query[] = <<<"EOF_BOSSES_TRAD"
+SELECT e.last_name AS "Employee",
+       e.employee_id AS "Emp#",
+       m.last_name AS "Manager",
+       m.employee_id AS "Mgr#"
+       FROM employees e, employees m
+       WHERE (e.manager_id = m.employee_id)
+       AND UPPER(e.last_name) LIKE 'T%';
+EOF_BOSSES_TRAD;
+$title[] = "Bosses of those whose names start with `G' (Traditional)";
+$headers[] = array("Employee", "Emp#", "Manager", "Mgr#");
+
 
 /* loop over the queries */
 for ($i = 0; $i < count($query); $i++) {
 	/* do the query */
 	if (($result = $mysqli->query($query[$i])) === FALSE) {
-		$error = 'Query Error (' . $mysqli->error . ') ';
-		$mysqli->close();
-		goto got_error;
-	}
+?>
+	<div class="row">
+	  <div class="col-xs-12 col-md-8">
+	    <div class="panel panel-info">
+  	      <div class="panel-heading">
+<?php echo $title[$i]; ?>
+	      </div>
+	      <div class="panel-body">
+		<pre><?php echo $query[$i]; ?></pre>
+		<pre>Query Error (<?php echo $mysqli->error; ?>)</pre>
+	      </div>
+	    </div> <!-- /panel -->
+          </div> <!-- /column -->
+	</div> <!-- /row -->
+<?php
+	} else {  // if (error)
 ?>
 	<div class="row">
 	  <div class="col-xs-12 col-md-8">
@@ -126,23 +181,23 @@ for ($i = 0; $i < count($query); $i++) {
   	        <thead>
   		  <tr>
 <?php
-	/* print the table header */
-	for ($j = 0; $j < count($headers[$i]); $j++) {
-		echo "<th> {$headers[$i][$j]} </th>";
-	}
+		/* print the table header */
+		for ($j = 0; $j < count($headers[$i]); $j++) {
+			echo "<th> {$headers[$i][$j]} </th>";
+		}
 ?>
   		  </tr>
   	        </thead>
   	        <tbody>
 <?php
-	/* print the results */
-	while ($row = $result->fetch_assoc()) {
-		echo "<tr>";
-		for ($j = 0; $j < count($headers[$i]); $j++) {
-			echo "<td> {$row[$headers[$i][$j]]} </td>";
-		}
-		echo "</tr>";
-	} // while ($row)
+		/* print the results */
+		while ($row = $result->fetch_assoc()) {
+			echo "<tr>";
+			for ($j = 0; $j < count($headers[$i]); $j++) {
+				echo "<td> {$row[$headers[$i][$j]]} </td>";
+			}
+			echo "</tr>";
+		} // while ($row)
 ?>
 	        </tbody>
               </table>
@@ -151,6 +206,7 @@ for ($i = 0; $i < count($query); $i++) {
 	</div> <!-- /row -->
 
 <?php
+	} /* else of error */
 } // for ($i)
 
 /* close connection and leave */
@@ -165,7 +221,7 @@ quit:
       <div class="row">
 	<div class="col-xs-12">
 	  <hr>
-	  <h1>End of Queries
+	  <h1>End of Queries</h1>
 	</div>
       </div>
 
