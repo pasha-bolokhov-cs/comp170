@@ -1,14 +1,18 @@
 <?php
 /*
   Assignment 6
-  Program name: ##
+  Program name: assign6.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: ##
-  Estimated Completion Time: ##
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Date: February 16, 2015
+  Estimated Completion Time: 4 hr
+  Actual Completion Time: 6 hr
+  Description: 
+	Create a PNG image consisting of two triangles, two squares and
+	two circles
+  Invocation: 
+	via '<img>' tag, or 
+	$ php assign6.php >picture.png
+  Requires: n/a
 */
 
 require_once("shapes.php");
@@ -31,23 +35,20 @@ for ($i = 0; $i < 2; $i++) {
 	/* square */
 	$size = rand(50, $height / 2);
 	draw_square($im, $width, $height,
-	    	    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
-	    	    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+	    	    random_color($im), random_color($im),
 	    	    rand(10, $width - 10 - $size), rand(10, $height - 10 - $size), $size);
 
 	/* circle */
 	$rad = rand(50, $height / 4);
 	draw_circle($im, $width, $height,
-		    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
-		    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+		    random_color($im), random_color($im),
 		    rand($rad + 10, $width - 10 - $rad), rand($rad + 10, $height - 10 - $rad), $rad);
 
 	/* triangle */
-	$side = rand(80, $height / 3);
+	$side = rand(80, $height / 2);
 	draw_tri($im, $width, $height,
-		 rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
-		 rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
-		 rand($rad + 10, $width - 10 - $rad), rand($rad + 10, $height - 10 - $rad), $side);
+		 random_color($im), random_color($im),
+		 rand($side / 2 + 10, $width - 10 - $side / 2), rand($side / 2 + 5, $height - 10 - $side / 2), $side);
 }
 
 /* add our canvas on top of background */

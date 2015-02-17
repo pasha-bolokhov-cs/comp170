@@ -1,0 +1,19 @@
+
+
+	URL
+	---
+
+	http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign6/assign6.html
+
+
+	FILES
+	-----
+
+	p-code		pseudo code
+
+	assign6.html	the main page
+
+	assign6.php	script generating the image
+
+	shapes.php	script containing functions which draw shapes
+

@@ -1,0 +1,22 @@
+Pseudo Code
+-----------
+
+
+assign6.php:
+
+		include 'shapes.php' 
+
+		send the content header
+
+		load the background image
+
+		create the main canvas
+
+		draw two squares / circles / triangles
+
+		mix the main canvas into the background
+
+		flush the image onto STDOUT
+
+		close the images
+
