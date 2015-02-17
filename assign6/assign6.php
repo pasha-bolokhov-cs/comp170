@@ -11,24 +11,38 @@
   Requires: ##
 */
 
-define("CANVAS_WIDTH", 500);
-define("CANVAS_HEIGHT", 500);
+require_once("shapes.php");
 
 /* put the content header */
 header("Content-type: image/png");
 
-/* create a canvas */
-$im = @imagecreatetruecolor(CANVAS_WIDTH, CANVAS_HEIGHT) or
+/* load the background */
+$bgim = @imagecreatefromjpeg("img/sunset.jpg") or
+	die("Could not open background image");
+$width = imagesx($bgim);
+$height = imagesy($bgim);
+
+/* create the canvas */
+$im = @imagecreatetruecolor($width, $height) or
       die("Could not create image");
 
-/* fill with some color */
-imagefill($im, 0, 0, 0xAAAABE);
+/* draw some shapes */
+for ($i = 0; $i < 2; $i++) {
+	$size = rand(20, $width / 2);
+	draw_square($im, $width, $height,
+	    	    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+	    	    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+	    	    rand(0, $width - $size), rand(0, $height - $size), $size);
+}
 
-imagerectangle($im, 10, 5, 100, 100, imagecolorallocate($im, 200, 120, 120));
+/* add our canvas on top of background */
+imagecopymerge($bgim, $im, 0, 0, 0, 0, $width, $height, 20);
 
 /* flush the image */
-imagepng($im);
+imagesavealpha($bgim, TRUE);
+imagepng($bgim);
 
 /* finish up */
 imagedestroy($im);
+imagedestroy($bgim);
 ?>
