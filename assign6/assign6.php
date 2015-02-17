@@ -28,11 +28,26 @@ $im = @imagecreatetruecolor($width, $height) or
 
 /* draw some shapes */
 for ($i = 0; $i < 2; $i++) {
-	$size = rand(20, $width / 2);
+	/* square */
+	$size = rand(50, $height / 2);
 	draw_square($im, $width, $height,
 	    	    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
 	    	    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
-	    	    rand(0, $width - $size), rand(0, $height - $size), $size);
+	    	    rand(10, $width - 10 - $size), rand(10, $height - 10 - $size), $size);
+
+	/* circle */
+	$rad = rand(50, $height / 4);
+	draw_circle($im, $width, $height,
+		    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+		    rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+		    rand($rad + 10, $width - 10 - $rad), rand($rad + 10, $height - 10 - $rad), $rad);
+
+	/* triangle */
+	$side = rand(80, $height / 3);
+	draw_tri($im, $width, $height,
+		 rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+		 rand(0, 255) * 0x10000 + rand(0, 255) * 0x100 + rand(0, 255),
+		 rand($rad + 10, $width - 10 - $rad), rand($rad + 10, $height - 10 - $rad), $side);
 }
 
 /* add our canvas on top of background */

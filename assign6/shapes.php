@@ -30,4 +30,14 @@ function draw_circle($res, $cwidth, $cheight, $fgcolor, $bgcolor, $loc_x, $loc_y
 	imageellipse($res, $loc_x, convert_y($loc_y, $cheight), 2 * $rad, 2 * $rad, $fgcolor);
 }
 
+function draw_tri($res, $cwidth, $cheight, $fgcolor, $bgcolor, $loc_x, $loc_y, $side) {
+	$height = round($side * sqrt(3.0) / 2.0);
+	imagefilledpolygon($res, 
+			   array(
+			  	 $loc_x - $side / 2, convert_y($loc_y - $height / 2, $cheight),
+				 $loc_x, convert_y($loc_y + $height / 2, $cheight),
+				 $loc_x + $side / 2, convert_y($loc_y - $height / 2, $cheight)
+			   ), 3, $bgcolor);
+}
+
 ?>
