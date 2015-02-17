@@ -22,13 +22,9 @@ $im = @imagecreatetruecolor(CANVAS_WIDTH, CANVAS_HEIGHT) or
       die("Could not create image");
 
 /* fill with some color */
-imagefill($im, 0, 0, imagecolorallocate($im, 200, 200, 220));
+imagefill($im, 0, 0, 0xAAAABE);
 
-imagerectangle($im, 0, 5, 100, 100, imagecolorallocate($im, 100, 20, 20));
-
-/* put a text line */
-imagestring($im, 1, 10, 10, 'Sample Graphics',
-	    imagecolorallocate($im, 255, 40, 100));
+imagerectangle($im, 10, 5, 100, 100, imagecolorallocate($im, 200, 120, 120));
 
 /* flush the image */
 imagepng($im);
