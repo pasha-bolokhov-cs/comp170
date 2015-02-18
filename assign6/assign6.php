@@ -8,7 +8,7 @@
   Actual Completion Time: 6 hr
   Description: 
 	Create a PNG image containing a circle / triangle / square
-	depending 
+	depending on a GET "shape" parameter
   Invocation: 
 	via '<img>' tag
   Requires:
