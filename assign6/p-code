@@ -6,17 +6,24 @@ assign6.php:
 
 		include 'shapes.php' 
 
+		get the shape variable from GET
+
+		call a function depending on the shape
+
+
+shapes.php:
+
+	draw_<shape>():
 		send the content header
 
 		load the background image
 
 		create the main canvas
 
-		draw two squares / circles / triangles
+		draw the <shape>
 
 		mix the main canvas into the background
 
 		flush the image onto STDOUT
 
 		close the images
-
