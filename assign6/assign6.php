@@ -7,12 +7,13 @@
   Estimated Completion Time: 4 hr
   Actual Completion Time: 6 hr
   Description: 
-	Create a PNG image consisting of two triangles, two squares and
-	two circles
+	Create a PNG image containing a circle / triangle / square
+	depending 
   Invocation: 
-	via '<img>' tag, or 
-	$ php assign6.php >picture.png
-  Requires: n/a
+	via '<img>' tag
+  Requires:
+	GET variable "shape" equal to one of "circle1", "square1", "triangle1",
+					     "circle2", "square2", "triangle2"
 */
 
 require_once("shapes.php");
