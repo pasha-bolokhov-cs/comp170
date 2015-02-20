@@ -23,7 +23,7 @@ $height = 692;
 /* call a function depending on parameter */
 switch ($shape) {
 case "square":
-	$size = rand(40, $height / 3);
+	$size = rand(80, $width / 3);
 	$sh = new square($width, $height,
 			 random_color(), random_color(),
 			 rand(10, $width - 10 - $size), rand(10, $height - 10 - $size), $size,
@@ -31,7 +31,7 @@ case "square":
 	break;
 
 case "circle":
-	$diam = rand(40, $height / 3);
+	$diam = rand(80, $width / 3);
 	$sh = new circle($width, $height,
 			 random_color(), random_color(),
 			 rand($diam + 10, $width - 10 - $diam), rand($diam + 10, $height - 10 - $diam), $diam,
@@ -39,7 +39,7 @@ case "circle":
 	break;
 
 case "triangle":
-	$side = rand(40, $height / 3);
+	$side = rand(80, $width / 3);
 	$sh = new tri($width, $height,
 		      random_color(), random_color(),
 		      rand($side / 2 + 10, $width - 10 - $side / 2), rand($side / 2 + 5, $height - 10 - $side / 2), $side,

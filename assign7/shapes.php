@@ -76,6 +76,17 @@ class shape {
 	protected $im, $bgim;
 
 	function __construct($cwidth, $cheight, $fgcolor, $bgcolor, $loc_x, $loc_y, $size, $bgimage) {
+		/* check validity of the location */
+		if ($loc_x - $size / 2 - MARGIN < 0 ||
+		    $loc_x + $size / 2 + MARGIN > $cwidth ||
+		    $loc_y - $size / 2 - MARGIN < 0 ||
+		    $loc_y + $size / 2 + MARGIN > $cheight) {
+			/* put in the middle */
+			$loc_x = $cwidth / 2;
+			$loc_y = $cheight / 2;
+			$size = 50;
+		}
+
 		/* copy over the parameters */
 		$this->cwidth = $cwidth;
 		$this->cheight = $cheight;
