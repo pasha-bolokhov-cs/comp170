@@ -1,14 +1,18 @@
 <?php
 /*
  * Assignment 7
- * Program name: ##
+ * Program name: assign7.php
  * Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
- * Date: ##
- * Estimated Completion Time: ##
- * Actual Completion Time: ## 
- * Description: ##
- * Invocation: ##
- * Requires: ##
+ * Date: February 19, 2015
+ * Estimated Completion Time: 8 hr
+ * Actual Completion Time: 6 hr
+ * Description: 
+ * 	A script that takes a GET "shape" parameter
+ *	and generates an image of the corresponding shape
+ * Invocation:
+ *	via main page URL or $ php assign7.php
+ * Requires:
+ *	"shape" GET variable
  */
 
 require_once("shapes.php");
@@ -61,6 +65,8 @@ for ($i = 0; $i < $num; $i++) {
 		random_move($sh);
 	}
 }
+
+/* do actual output */
 $sh->display();
 
 ?>

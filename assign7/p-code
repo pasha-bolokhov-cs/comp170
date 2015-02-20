@@ -1,0 +1,36 @@
+Pseudo Code
+-----------
+
+
+assign7.php:
+		get the shape name from GET request
+
+		create an instance of a shape based on the received name
+
+		draw a few random shapes using 'draw()' method
+
+		send the output
+
+
+shapes.php:
+		- a function for conversion of 'y' coordinates
+
+		- a function to perform a random move
+
+		- a function to create a random colour
+
+		- a generic class 'shape'
+
+			constructor creates the canvas
+
+			method display() send the output
+
+			methods bigger(), smaller(),
+			left(), right(), up(), down()
+			perform the changes while checking for the border
+
+		- classes 'square', 'circle', 'tri'
+		  inherit from 'shape'
+
+			methods 'draw()' draw the corresponding shapes
+

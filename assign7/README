@@ -1,0 +1,19 @@
+
+
+	URL
+	---
+
+	http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign7/assign7.html
+
+
+	FILES
+	-----
+
+	p-code		pseudo code
+
+	assign7.html	the main page
+
+	assign7.php	script generating the images
+
+	shapes.php	the script containing the 'shape', 'circle', 'square' and 'tri' classes
+

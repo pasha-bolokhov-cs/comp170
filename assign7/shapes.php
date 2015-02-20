@@ -1,17 +1,20 @@
 <?php
 /*
  * Assignment 7
- * Program name: ##
+ * Program name: shapes.php
  * Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
- * Date: ##
- * Estimated Completion Time: ##
- * Actual Completion Time: ## 
- * Description: ##
- * Invocation: ##
- * Requires: ##
+ * Date: February 19, 2015
+ * Estimated Completion Time: 8 hr
+ * Actual Completion Time: 6 hr
+ * Description: 
+ *	A script containing a set of shapes implemented
+ *	as classes 'circle', 'square', 'tri' realized
+ *	as children of 'shape'
+ * Invocation: n/a
+ * Requires: n/a
  */
 
-define('STEP', 10);
+define('STEP', 32);
 define('MARGIN', 10);
 
 /*
@@ -188,10 +191,12 @@ class square extends shape {
 	 * draw the actual square
 	 */
 	function draw() {
-		imagefilledrectangle($this->im, $this->x, convert_y($this->y + $this->size - 1, $this->cheight),
-				     $this->x + $this->size - 1, convert_y($this->y, $this->cheight), $this->bgcolor);
-		imagerectangle($this->im, $this->x, convert_y($this->y + $this->size - 1, $this->cheight),
-			       $this->x + $this->size - 1, convert_y($this->y, $this->cheight), $this->fgcolor);
+		imagefilledrectangle($this->im, $this->x - $this->size / 2, convert_y($this->y + $this->size / 2, $this->cheight),
+				     $this->x + $this->size / 2 - 1, convert_y($this->y - $this->size / 2 + 1, $this->cheight), 
+				     $this->bgcolor);
+		imagerectangle($this->im, $this->x - $this->size / 2, convert_y($this->y + $this->size / 2, $this->cheight),
+				     $this->x + $this->size / 2 - 1, convert_y($this->y - $this->size / 2 + 1, $this->cheight), 
+				     $this->fgcolor);
 	}
 }
 
