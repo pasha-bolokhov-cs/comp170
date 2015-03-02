@@ -130,24 +130,14 @@
       <!-- actual results -->
       <div class="row" ng-show="showResult && !error" ng-cloak>
 	<div class="col-xs-12 col-md-10">
-          <table class="table">
-	    <thead>
-	      <tr>
-		<th ng-repeat="h in headers">
-		  {{ h }}
-		</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      <tr ng-repeat="row in results">
-		<td ng-repeat="h in headers">
-		  {{ getColumn(h, row) }}
-		</td>
-	      </tr>
-	    </tbody>
-          </table>
 	</div>
       </div> <!-- /div with the results -->
+
+      <!-- GG -->
+      <div class="row">
+	<div class="col-xs-12" ng-bind-html="htmlContent">
+	</div>
+      </div>
     </div> <!-- /container-fluid -->
 
     <!----------------------------------------->

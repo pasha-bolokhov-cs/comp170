@@ -1,20 +1,14 @@
 <?php
 /* 
-  Assignment 5
-  Program name: query.php
+  Assignment 8
+  Program name: ##
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: February 10, 2015
-  Estimated Completion Time: 6 hr
-  Actual Completion Time: 16 hr
-  Description:
-	A script which takes the form input from 'query.html', forms a MySQL query
-	and runs the query to a MySQL database
-  Invocation: via POST request only
-  Requires:
-	Variables "what", "from" and optional "where" as part of data 
-	in JSON format sent via POST request.
-
-	File 'mysqli_connect.php' must be sitting at the appropriate path
+  Date: ##
+  Estimated Completion Time: ##
+  Actual Completion Time: ## 
+  Description: ##
+  Invocation: ##
+  Requires: ##
 */ 
 
 /* Cancel very long responses */
@@ -90,6 +84,26 @@ while ($row = $result->fetch_assoc()) {
 		goto database_quit;
 	}
 }
+
+/* GG */
+$doc = new DOMDocument('1.0');
+$doc->formatOutput = true;
+$doc->loadHTML('<!DOCTYPE><?xml-stylesheet type="text/xsl" href="convert.xsl">');
+$root = $doc->appendChild($doc->createElement('root'));
+$head = $root->appendChild($doc->createElement('head'));
+foreach ($response["headers"] as $h) {
+	$hdr = $head->appendChild($doc->createElement('header'));
+	$hdr_val = $hdr->appendChild($doc->createTextNode($h));
+}
+$body = $root->appendChild($doc->createElement('body'));
+foreach ($response["data"] as $row) {
+	$line = $body->appendChild($doc->createElement('row'));
+	foreach ($response["headers"] as $h) {
+		$cell = $line->appendChild($doc->createElement('cell'));
+		$cell_val = $cell->appendChild($doc->createTextNode($row[$h]));
+	}
+}
+$doc->save("test.xml");
 
 
 database_quit:
