@@ -81,7 +81,7 @@ foreach ($fields as $field) {
 }
 
 /* pack the results */
-$response["data"] = array();
+$body = $root->appendChild($doc->createElement('body'));
 for ($lines = 0; 
      $row = $result->fetch_assoc();		// assignment, not equality
      $lines++) {

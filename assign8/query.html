@@ -130,11 +130,12 @@
 
       <!-- actual results -->
       <div class="row" ng-show="showResult && !error" ng-cloak>
-	<div class="col-xs-12 col-md-10 ng-bind-html=result">
-		TESTTEST
+	<div class="col-xs-12 col-md-10" ng-bind-html="result">
 	</div>
       </div> <!-- /div with the results -->
     </div> <!-- /container-fluid -->
+
+
 
     <!----------------------------------------->
     <!-- JQuery, Bootstrap, and Bootstrap UI -->
@@ -164,18 +165,6 @@
 			$scope.result = undefined;
 		}
 		$scope.reset();
-
-		// GG
-		$scope.openModal = function() {
-			var modal = $modal.open({
-				templateUrl: 'test.html',
-				controller: 'modalController',
-				size: 'lg',
-				backdrop: "static"
-			});
-		};
-		$scope.result = $sce.trustAsHtml("<h2>No <em>result</em> yet</h2>");
-		$scope.showResult = true;
 
 		// Function attached to the buttons
 		$scope.send = function() {
@@ -207,11 +196,6 @@
 			});
 		}	/* send() */
 
-      });
-
-      // GG
-      queryApp.controller('modalController', function($scope, $modal) {
-	      console.log("modalController()");
       });
     </script>
   </body>
