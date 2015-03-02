@@ -88,7 +88,7 @@ while ($row = $result->fetch_assoc()) {
 /* GG */
 $doc = new DOMDocument('1.0');
 $doc->formatOutput = true;
-$doc->loadHTML('<!DOCTYPE><?xml-stylesheet type="text/xsl" href="convert.xsl">');
+$doc->loadHTML('<!DOCTYPE query><?xml-stylesheet type="text/xsl" href="convert.xsl">');
 $root = $doc->appendChild($doc->createElement('root'));
 $head = $root->appendChild($doc->createElement('head'));
 foreach ($response["headers"] as $h) {

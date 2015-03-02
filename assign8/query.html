@@ -101,6 +101,14 @@
 		  &nbsp;Clear
 		</button>
 	      </div> <!-- Clear -->
+
+      <!-- GG -->
+      <div class="row">
+        <div class="col-xs-12 col-md-3">
+	  <button ng-click="openModal()" class="btn btn-info btn-lg">Show</button>
+	</div>
+      </div>
+
 	    </div>
 	  </form>
 	</div> <!-- /col-xs-12 wrapping the form -->
@@ -132,12 +140,6 @@
 	<div class="col-xs-12 col-md-10">
 	</div>
       </div> <!-- /div with the results -->
-
-      <!-- GG -->
-      <div class="row">
-	<div class="col-xs-12" ng-bind-html="htmlContent">
-	</div>
-      </div>
     </div> <!-- /container-fluid -->
 
     <!----------------------------------------->
@@ -152,8 +154,9 @@
     <!------------------------------------>
     <script>
       angular.module('queryApp', ['ui.bootstrap', 'ngSanitize']);
+      var queryApp = 
       angular.module('queryApp').controller("queryController",
-	function($scope, $http) {
+	function($scope, $http, /* GG */ $modal) {
 
 		// Resettable data initialization
 		$scope.reset = function() {
@@ -167,6 +170,16 @@
 			$scope.result = undefined;
 		}
 		$scope.reset();
+
+		// GG
+		$scope.openModal = function() {
+			var modal = $modal.open({
+				templateUrl: 'sample-table.xml',
+				controller: 'modalController',
+				size: 'lg',
+				backdrop: "static"
+			});
+		};
 
 		// Function attached to the buttons
 		$scope.send = function() {
@@ -198,6 +211,11 @@
 			});
 		}	/* send() */
 
+      });
+
+      // GG
+      queryApp.controller('modalController', function($scope, $modal) {
+	      console.log("modalController()");
       });
     </script>
   </body>
