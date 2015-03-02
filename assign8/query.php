@@ -103,7 +103,13 @@ foreach ($response["data"] as $row) {
 		$cell_val = $cell->appendChild($doc->createTextNode($row[$h]));
 	}
 }
+$xsl = new DOMDocument();
+$xsl->load('convert.xsl');
+$proc = new XSLTProcessor;
+$proc->importStyleSheet($xsl);
+$html = $proc->transformToDoc($doc);
 $doc->save("test.xml");
+$html->save("test.html");
 
 
 database_quit:
