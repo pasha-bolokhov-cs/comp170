@@ -1,1 +1,2 @@
-emacs -nw query.{php,html} header
+emacs -nw header query.{php,html}
+
