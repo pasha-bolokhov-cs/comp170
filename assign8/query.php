@@ -64,52 +64,51 @@ if (($result = $mysqli->query($query)) === FALSE) {
 	goto database_quit;
 }
 
+/* create a new XML */
+$doc = new DOMDocument('1.0');
+$doc->formatOutput = true;
+$doc->loadHTML('<!DOCTYPE query><?xml-stylesheet type="text/xsl" href="convert.xsl">');
+$root = $doc->appendChild($doc->createElement('root'));
+
 /* get the headers */
-$response["headers"] = array();
 $fields = $result->fetch_fields();
+$headers = array();
+$head = $root->appendChild($doc->createElement('head'));
 foreach ($fields as $field) {
-	$response["headers"][] = $field->name;
+	$headers[] = $field->name;
+	$hdr = $head->appendChild($doc->createElement('header'));
+	$hdr->appendChild($doc->createTextNode($field->name));
 }
 
 /* pack the results */
 $response["data"] = array();
-while ($row = $result->fetch_assoc()) {
+for ($lines = 0; 
+     $row = $result->fetch_assoc();		// assignment, not equality
+     $lines++) {
 	// append the row
-	$response["data"][] = $row;
+	$line = $body->appendChild($doc->createElement('row'));
+	foreach ($headers as $h) {
+		$cell = $line->appendChild($doc->createElement('cell'));
+		$cell->appendChild($doc->createTextNode($row[$h]));
+	}
 
 	// check how many lines we have
-	if (count($response["data"]) > MAX_RESPONSE_LINES) {
+	if ($lines > MAX_RESPONSE_LINES) {
 		$response["data"] = NULL;
 		$response["error"] = "response too large (over " . MAX_RESPONSE_LINES . " lines)";
 		goto database_quit;
 	}
 }
 
-/* GG */
-$doc = new DOMDocument('1.0');
-$doc->formatOutput = true;
-$doc->loadHTML('<!DOCTYPE query><?xml-stylesheet type="text/xsl" href="convert.xsl">');
-$root = $doc->appendChild($doc->createElement('root'));
-$head = $root->appendChild($doc->createElement('head'));
-foreach ($response["headers"] as $h) {
-	$hdr = $head->appendChild($doc->createElement('header'));
-	$hdr_val = $hdr->appendChild($doc->createTextNode($h));
-}
-$body = $root->appendChild($doc->createElement('body'));
-foreach ($response["data"] as $row) {
-	$line = $body->appendChild($doc->createElement('row'));
-	foreach ($response["headers"] as $h) {
-		$cell = $line->appendChild($doc->createElement('cell'));
-		$cell_val = $cell->appendChild($doc->createTextNode($row[$h]));
-	}
-}
+/* Convert with XSL and pack the data */
 $xsl = new DOMDocument();
 $xsl->load('convert.xsl');
 $proc = new XSLTProcessor;
 $proc->importStyleSheet($xsl);
 $html = $proc->transformToDoc($doc);
-$doc->save("test.xml");
-$html->save("test.html");
+/* GG */ $doc->save("test.xml");
+/* GG */ $html->save("test.html");
+$response["data"] = $html->saveHTML();
 
 
 database_quit:

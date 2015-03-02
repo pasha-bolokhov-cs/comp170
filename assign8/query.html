@@ -102,14 +102,7 @@
 		</button>
 	      </div> <!-- Clear -->
 
-      <!-- GG -->
-      <div class="row">
-        <div class="col-xs-12 col-md-3">
-	  <button ng-click="openModal()" class="btn btn-info btn-lg">Show</button>
-	</div>
-      </div>
-
-	    </div>
+	    </div> <!-- Row of Buttons -->
 	  </form>
 	</div> <!-- /col-xs-12 wrapping the form -->
       </div> <!-- /row -->
@@ -137,7 +130,8 @@
 
       <!-- actual results -->
       <div class="row" ng-show="showResult && !error" ng-cloak>
-	<div class="col-xs-12 col-md-10">
+	<div class="col-xs-12 col-md-10 ng-bind-html=result">
+		TESTTEST
 	</div>
       </div> <!-- /div with the results -->
     </div> <!-- /container-fluid -->
@@ -156,7 +150,7 @@
       angular.module('queryApp', ['ui.bootstrap', 'ngSanitize']);
       var queryApp = 
       angular.module('queryApp').controller("queryController",
-	function($scope, $http, /* GG */ $modal) {
+	function($scope, $http, $sce /* GG */, $modal) {
 
 		// Resettable data initialization
 		$scope.reset = function() {
@@ -180,6 +174,8 @@
 				backdrop: "static"
 			});
 		};
+		$scope.result = $sce.trustAsHtml("<h2>No <em>result</em> yet</h2>");
+		$scope.showResult = true;
 
 		// Function attached to the buttons
 		$scope.send = function() {
