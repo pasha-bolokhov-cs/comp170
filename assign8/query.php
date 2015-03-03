@@ -50,18 +50,13 @@ if (preg_match('/\b(SELECT)|(SET)|(UNION)|(UPDATE)|(INSERT)|(ALTER)|(CREATE)\b/i
 	goto quit;
 }
 
-
 /* form the query string */
 $query = $where != "" ? "SELECT $what FROM $from WHERE $where;"
 		      : "SELECT $what FROM $from;";
 
-/* connect to the database */
-require_once '../../../comp170-www/msqli_connect.php';
-
-/* do the query */
-if (($result = $mysqli->query($query)) === FALSE) {
-	$response["error"] = 'Query Error (' . $mysqli->error . ') ';
-	goto database_quit;
+/* send the query */
+if (perform_query($query, $response) === FALSE) {
+	goto quit;
 }
 
 /* create a new XML */
@@ -71,23 +66,19 @@ $doc->loadHTML('<!DOCTYPE query><?xml-stylesheet type="text/xsl" href="convert.x
 $root = $doc->appendChild($doc->createElement('root'));
 
 /* get the headers */
-$fields = $result->fetch_fields();
-$headers = array();
 $head = $root->appendChild($doc->createElement('head'));
-foreach ($fields as $field) {
-	$headers[] = $field->name;
+foreach ($response["headers"] as $h) {
 	$hdr = $head->appendChild($doc->createElement('header'));
-	$hdr->appendChild($doc->createTextNode($field->name));
+	$hdr->appendChild($doc->createTextNode($h));
 }
 
 /* pack the results */
 $body = $root->appendChild($doc->createElement('body'));
-for ($lines = 0; 
-     $row = $result->fetch_assoc();		// assignment, not equality
-     $lines++) {
-	// append the row
+$lines = 0;
+foreach ($response["data"] as $row) {
+	// create the next row
 	$line = $body->appendChild($doc->createElement('row'));
-	foreach ($headers as $h) {
+	foreach ($response["headers"] as $h) {
 		$cell = $line->appendChild($doc->createElement('cell'));
 		$cell->appendChild($doc->createTextNode($row[$h]));
 	}
@@ -96,8 +87,9 @@ for ($lines = 0;
 	if ($lines > MAX_RESPONSE_LINES) {
 		$response["data"] = NULL;
 		$response["error"] = "response too large (over " . MAX_RESPONSE_LINES . " lines)";
-		goto database_quit;
+		goto quit;
 	}
+	$lines++;
 }
 
 /* Convert with XSL and pack the data */
@@ -108,12 +100,59 @@ $proc->importStyleSheet($xsl);
 $html = $proc->transformToDoc($doc);
 $response["data"] = $html->saveHTML();
 
-
-database_quit:
-/* close the database */
-$mysqli->close();
-
 quit:
 /* return the response */
 echo json_encode($response);
+
+
+/*
+ * Submits '$query' to the database
+ * Fills '$reply' as an associative array:
+ * 	$reply["headers"]	is the set of column names
+ *	$reply["data"]		is the set of rows, each row
+ *				being an associative array indexed
+ *				by the headers
+ *	$reply["error"]	is the error message in case of
+ *				an error
+ *
+ * Returns:
+ *	TRUE			on success
+ *	FALSE			on failure
+ */
+function perform_query($query, &$reply) {
+	/* connect to the database */
+	require_once '../../../comp170-www/mysqli_auth.php';
+	$mysqli = @new mysqli('localhost', '170user', 'phphasclass', 'comp170');
+	if ($mysqli->connect_error) {
+		$reply["error"] = 'Connect Error (' . $mysqli->connect_errno . ') '
+				  . $mysqli->connect_error;
+		return FALSE;
+	}
+	
+	/* do the query */
+	if (($result = $mysqli->query($query)) === FALSE) {
+		$reply["error"] = 'Query Error (' . $mysqli->error . ') ';
+		$mysqli->close();
+		return FALSE;
+	}
+
+	/* get the headers */
+	$fields = $result->fetch_fields();
+	$reply["headers"] = array();
+	foreach ($fields as $field) {
+		$reply["headers"][] = $field->name;
+	}
+
+	/* get the data rows */
+	while ($row = $result->fetch_assoc()) {
+		// append the row
+		$reply["data"][] = $row;
+	}
+
+	/* close the database */
+	$mysqli->close();
+
+	return TRUE;
+}
+
 ?>
