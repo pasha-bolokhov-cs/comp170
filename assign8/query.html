@@ -151,7 +151,7 @@
       angular.module('queryApp', ['ui.bootstrap', 'ngSanitize']);
       var queryApp = 
       angular.module('queryApp').controller("queryController",
-	function($scope, $http, $sce /* GG */, $modal) {
+	function($scope, $http, $sce) {
 
 		// Resettable data initialization
 		$scope.reset = function() {

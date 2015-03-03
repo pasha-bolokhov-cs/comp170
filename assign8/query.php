@@ -106,8 +106,6 @@ $xsl->load('convert.xsl');
 $proc = new XSLTProcessor;
 $proc->importStyleSheet($xsl);
 $html = $proc->transformToDoc($doc);
-/* GG */ $doc->save("test.xml");
-/* GG */ $html->save("test.html");
 $response["data"] = $html->saveHTML();
 
 
