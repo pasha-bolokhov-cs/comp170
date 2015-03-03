@@ -62,7 +62,7 @@ $query = $where != "" ? "SELECT $what FROM $from WHERE $where;"
 		      : "SELECT $what FROM $from;";
 
 /* connect to the database */
-require_once '../../../comp170-www/msqli_connect.php';
+require_once '../../../comp170-www/mysqli_connect.php';
 
 /* do the query */
 if (($result = $mysqli->query($query)) === FALSE) {

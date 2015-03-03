@@ -58,7 +58,7 @@
       <!------------->
 <?php
 /* connect to the database */
-require_once '../../../comp170-www/msqli_connect.php';
+require_once '../../../comp170-www/mysqli_connect.php';
 
 if ($mysqli->connect_error) {
 	$error = 'Connect Error (' . $mysqli->connect_errno . ') '
