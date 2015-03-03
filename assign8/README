@@ -1,0 +1,53 @@
+
+
+	URL
+	---
+
+	http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign8/query.html
+
+
+	FILES
+	-----
+
+	p-code		pseudo code
+
+	query.html	View: the user interface part. Accepts form input and sends it
+			to the controller ('query.php')
+
+	xml.php		View: accepts data arrays from the controller and turns them into
+			a structured XML, then processes the XML with a XSLT processor
+			using the stylesheet ('convert.xsl')
+
+	convert.xsl	View: a XSL stylesheet which transforms a structured XML into
+			an HTML table
+
+	query.php	Controller: takes input variables, forms a query, sends the query
+			to the model ('db.php'), then forwards the data arrays to the
+			view module ('xml.php')
+
+	db.php		Model: takes the query string and performs all database-specific operations.
+			Returns data arrays
+
+
+	NOTES
+	-----
+
+	The previous implementation of this form (Assignment 5) essentially already did a MVC
+	realization, as AngularJS separates the model from the view. The XML part of course
+	is absent there -- but that is because Angular uses JSON
+
+	However, the customary transformation from XML into HTML (via XSL) happens anyway
+	on the client side, in the browser. A similar creation of the HTML table is done
+	in Assignment 5, via Angular. Of course the Javascript inside Angular is slower
+	than the XSL transformation in the browser in that regards
+
+	In this assignment, since that data still travels between the client and the server
+	in JSON format, and the accepting side is Javascript, the browser is effectively
+	isolated. The XSL transformation has to be done on the server side ('xml.php').
+	The resulting HTML patch is then sent back to Javascript which displays it on the
+	bottom
+
+	It is probably not very optimal to combine AngularJS with XML in this respect,
+	as we end up with two adjacent MVC entities -- AngularJS and the PHP side, but
+	the PHP side MVC is implemented for the purpose of this assignment
+

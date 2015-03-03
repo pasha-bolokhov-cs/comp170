@@ -1,14 +1,20 @@
 <?php
 /* 
   Assignment 8
-  Program name: ##
+  Program name: query.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: ##
-  Estimated Completion Time: ##
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Date: March 2, 2015
+  Estimated Completion Time: 8 hr
+  Actual Completion Time: 14 hr
+  Description: 
+	The Controller for the web-form access to the MySQL database.
+	Accepts a query, validates, prompts the database, and 
+	sends the result to the XML processor
+
+  Invocation: via POST request only
+  Requires:
+	an object with "what", "from" and optional "where"
+	properties sent in via POST from the web form
 */ 
 
 /* Include Database API */

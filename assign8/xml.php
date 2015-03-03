@@ -1,14 +1,18 @@
 <?php
 /* 
   Assignment 8
-  Program name: ##
+  Program name: xml.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: ##
-  Estimated Completion Time: ##
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Date: March 2, 2015
+  Estimated Completion Time: 8 hr
+  Actual Completion Time: 14 hr
+  Description: 
+	The pathway to the View part of the web-form MySQL database query.
+	Accepts the arrays with values, creates a structured XML from these arrays
+	and applies an XSLT transformation
+
+  Invocation: via Controller only
+  Requires: n/a
 */ 
 
 /* Cancel very long responses */
@@ -34,14 +38,14 @@ function convert_to_XML($headers, $rows, &$result, &$error) {
 	$doc->loadHTML('<!DOCTYPE query><?xml-stylesheet type="text/xsl" href="convert.xsl">');
 	$root = $doc->appendChild($doc->createElement('root'));
 	
-	/* get the headers */
+	/* put the headers */
 	$head = $root->appendChild($doc->createElement('head'));
 	foreach ($headers as $h) {
 		$hdr = $head->appendChild($doc->createElement('header'));
 		$hdr->appendChild($doc->createTextNode($h));
 	}
 	
-	/* pack the results */
+	/* pack the data rows */
 	$body = $root->appendChild($doc->createElement('body'));
 	$lines = 0;
 	foreach ($rows as $row) {

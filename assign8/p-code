@@ -1,0 +1,39 @@
+Pseudo Code
+-----------
+
+query.php:
+		fetch the query from JSON input
+
+		check the presence of the mandatory "what" and "from" fields
+
+		validate the input entries
+
+		form the query string
+
+		send the query to the database
+
+		convert results to XML
+
+		send out the result back to the client page
+
+
+db.php:
+		connect to the database using hidden credentials
+
+		send the query
+
+		fetch the headers into a separate array
+
+		get the data rows
+
+		close the database
+
+
+xml.php:
+		create a new XML document class
+
+		put the headers into the XML
+
+		pack the data rows into the XML
+
+		perform on-server XSLT conversion
