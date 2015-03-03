@@ -175,7 +175,7 @@
 	function($scope, $http, $sce) {
 
 		// Resettable data initialization
-		$scope.reset = function() {
+		$scope.setup = function() {
 			// Initialization
 			$scope.showResult = false;
 			$scope.error = false;
@@ -185,9 +185,18 @@
 			$scope.request = {};
 			$scope.result = undefined;
 		}
-		$scope.reset();
+		$scope.setup();		
 
 		// Function attached to the buttons
+		$scope.reset = function() {
+			/* reset the data */
+			$scope.setup();
+
+			/* mark form as pristine */
+			$scope.sqlform.$setValidity();
+			$scope.sqlform.$setPristine();
+		}
+
 		$scope.send = function() {
 			/* Re-initialize */
 			$scope.error = false;
