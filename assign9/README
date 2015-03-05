@@ -1,0 +1,36 @@
+
+
+	URL
+	---
+
+	http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign9/query.html
+
+
+	FILES
+	-----
+
+	p-code		pseudo code
+
+	query.html	View: the user interface part. Accepts form input and sends it
+			to the controller ('query.php')
+
+	xml.php		View: accepts data arrays from the controller and turns them into
+			a structured XML, then processes the XML with a XSLT processor
+			using the stylesheet ('convert.xsl')
+
+	convert.xsl	View: a XSL stylesheet which transforms a structured XML into
+			an HTML table
+
+	query.php	Controller: takes input variables, forms a query, sends the query
+			to the model ('db.php'), then forwards the data arrays to the
+			view module ('xml.php')
+
+	db.php		Model: takes the query string and performs all database-specific operations.
+			Returns data arrays
+
+
+	NOTES
+	-----
+
+	Both Assignment 8 and Assignment 5 use AJAX
+	So I am just posting a copy of this Assignment 8 renamed to "Assignment 9"
