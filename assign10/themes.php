@@ -10,6 +10,8 @@
   Invocation: ##
   Requires: ##
  */
+
+/* start or restore a session */
 session_start();
 
 /* check if we have input */
@@ -18,9 +20,26 @@ $data = json_decode($jsonData);
 
 if (count($data) != 0) {
 	/* we were just asked to save the theme */
-	echo "<h2> some data was sent </h2>";
+	if (isset($data["theme"])) {
+		if ($data["theme"] == "clear") {
+			clear_session();
+			exit;
+		}
+		$_SESSION["theme"] = $data["theme"];
+		exit;
+	}
 } else {
 	echo "<h2> no data was sent</h2>";
+}
+
+/*
+ * Completely remove all session data
+ */
+function clear_session()
+{
+	setcookie(session_name(), "", time() - 3600);
+	session_unset();
+	session_destroy();
 }
 ?>
 <html>
@@ -60,19 +79,9 @@ if (!isset($_SESSION['theme'])) {
 	echo "<h2>Session set to `${_SESSION['theme']}'</h2>\n";
 	echo <<<"EOF_THEME_SCRIPT"
 <script>
-	theme = ${_SESSION['theme']};
+	theme = "${_SESSION['theme']}";
 </script>
 EOF_THEME_SCRIPT;
-}
-
-/*
- * Complete remove all session data
- */
-function clear_session()
-{
-	setcookie(session_name(), "", time() - 3600);
-	session_unset();
-	session_destroy();
 }
 ?>
 
@@ -100,34 +109,48 @@ function clear_session()
 
 
       <!------------->
+      <!-- Content -->
+      <!------------->
+      <div class="row">
+	<div class="col-xs-12">
+	  <div class="lead">
+		Content of style <em>{{ theme }}<em>
+	  </div>
+	</div>
+      </div>
+      <hr>
+
+
+
+      <!------------->
       <!-- Buttons -->
       <!------------->
       <div class="row" ng-cloak>
         <div class="col-xs-12">
           <div class="btn-group">
-            <label class="btn btn-default" ng-model="log_radio" ng-click="send(0)" btn-radio="'0'">
+            <label class="btn btn-default" ng-model="log_radio" ng-click='send("clear")' btn-radio="'0'">
 	      &nbsp;
 	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
               Clear
 	      &nbsp;
             </label>
-            <label class="btn btn-primary" ng-model="log_radio" ng-click="send(1)" btn-radio="'1'">
+            <label class="btn btn-primary" ng-model="log_radio" ng-click='send("winter")' btn-radio="'1'">
               &nbsp;
 	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
               Winter
 	      &nbsp;
             </label>
-            <label class="btn btn-info" ng-model="log_radio" ng-click="send(2)" btn-radio="'2'">
+            <label class="btn btn-info" ng-model="log_radio" ng-click='send("spring")' btn-radio="'2'">
               &nbsp;
 	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
               Spring
 	      &nbsp;
             </label>
-            <label class="btn btn-warning" ng-model="log_radio" ng-click="send(3)" btn-radio="'3'">
+            <label class="btn btn-warning" ng-model="log_radio" ng-click='send("summer")' btn-radio="'3'">
               <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
               Summer
             </label>
-            <label class="btn btn-danger" ng-model="log_radio" ng-click="send(2)" btn-radio="'2'">
+            <label class="btn btn-danger" ng-model="log_radio" ng-click='send("autumn")' btn-radio="'2'">
               <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
               Autumn
             </label>
@@ -181,6 +204,9 @@ function clear_session()
       angular.module('themeApp').controller("appController",
 	function($scope, $http, $sce) {
 
+		// Permanent initialization
+		$scope.theme = theme;
+
 		// Resettable data initialization
 		$scope.setup = function() {
 			// Initialization
@@ -203,16 +229,25 @@ function clear_session()
 			$scope.sqlform.$setPristine();
 		}	/* reset() */
 
-		$scope.send = function() {
+		$scope.send = function(chosenTheme) {
 			/* Re-initialize */
 			$scope.error = false;
 			$scope.waiting = true;
 			$scope.showResult = false;
 
+			/* take on the chosen theme */
+			if (chosenTheme === "clear")
+				$scope.theme = "default";
+			else
+				$scope.theme = chosenTheme;
+			$scope.request["theme"] = chosenTheme;
+
+console.log("chosen theme = " + chosenTheme);		//GG
+
 			/* Request object is ready to send */
 
 			// Send the request to the PHP script
-			$http.post("query.php", $scope.request)
+			$http.post("themes.php", $scope.request)
 			.success(function(data) {
 				// process the response
 				if (data["error"]) {
