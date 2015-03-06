@@ -36,7 +36,6 @@ if (count($data) != 0 && property_exists($data, "theme")) {
  */
 function clear_session()
 {
-	setcookie(session_name(), "", time() - 3600);
 	session_unset();
 	session_destroy();
 }
@@ -98,7 +97,7 @@ EOF_THEME_SCRIPT;
       <!----------------->
       <div class="row page-header">
 	<div class="col-xs-12">
-	  <h1>Persistent Colours</h1>
+	  <h1 class="text-center">Persistent Colours</h1>
 	</div>
       </div>
 
@@ -110,8 +109,8 @@ EOF_THEME_SCRIPT;
       <div class="row" ng-cloak>
 	<div class="col-xs-12">
 	  <div class="jumbotron">
-	    <div class="lead">
-		  Content of style <em>{{ theme }}<em>
+	    <div class="lead text-center">
+		  Content of style <em>{{ theme }}</em>
 	    </div>
 	  </div>
 	</div>
@@ -124,7 +123,7 @@ EOF_THEME_SCRIPT;
       <!-- Buttons -->
       <!------------->
       <div class="row" ng-cloak>
-        <div class="col-xs-12">
+        <div class="col-xs-12 text-center">
           <div class="btn-group">
             <label class="btn btn-default" ng-model="log_radio" ng-click='send("clear")' btn-radio="'0'">
 	      &nbsp;
@@ -148,7 +147,7 @@ EOF_THEME_SCRIPT;
               <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
               Summer
             </label>
-            <label class="btn btn-danger" ng-model="log_radio" ng-click='send("autumn")' btn-radio="'2'">
+            <label class="btn btn-danger" ng-model="log_radio" ng-click='send("autumn")' btn-radio="'4'">
               <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
               Autumn
             </label>
