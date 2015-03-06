@@ -10,6 +10,18 @@
   Invocation: ##
   Requires: ##
  */
+session_start();
+
+/* check if we have input */
+$jsonData = file_get_contents("php://input");
+$data = json_decode($jsonData);
+
+if (count($data) != 0) {
+	/* we were just asked to save the theme */
+	echo "<h2> some data was sent </h2>";
+} else {
+	echo "<h2> no data was sent</h2>";
+}
 ?>
 <html>
   <!-- **** -->
@@ -20,7 +32,7 @@
   <head>
     <!-- Title -->
     <title>
-      Theme selection
+      Persistent Colours
     </title>
 
     <!-- Bootstrap -->
@@ -34,12 +46,44 @@
 
 
 
+  <!-- *************** -->
+  <!--                 -->
+  <!-- Determine Theme -->
+  <!--                 -->
+  <!-- *************** -->
+<?php
+if (!isset($_SESSION['theme'])) {
+	echo '<h2>Session not set</h2>';
+	$_SESSION['theme'] = "default";
+	exit;
+} else {
+	echo "<h2>Session set to `${_SESSION['theme']}'</h2>\n";
+	echo <<<"EOF_THEME_SCRIPT"
+<script>
+	theme = ${_SESSION['theme']};
+</script>
+EOF_THEME_SCRIPT;
+}
+
+/*
+ * Complete remove all session data
+ */
+function clear_session()
+{
+	setcookie(session_name(), "", time() - 3600);
+	session_unset();
+	session_destroy();
+}
+?>
+
+
+
   <!-- **** -->
   <!--      -->
   <!-- Body -->
   <!--      -->
   <!-- **** -->
-  <body ng-app="queryApp" ng-controller="queryController">
+  <body ng-app="themeApp" ng-controller="appController">
     <div class="container-fluid">
 
 
@@ -49,85 +93,46 @@
       <!----------------->
       <div class="row page-header">
 	<div class="col-xs-12">
-	  <h1>Stateful Theme Selection</h1>
+	  <h1>Persistent Colours</h1>
 	</div>
       </div>
 
 
 
-      <!-------------->
-      <!-- The form -->
-      <!-------------->
+      <!------------->
+      <!-- Buttons -->
+      <!------------->
       <div class="row" ng-cloak>
-	<div class="col-xs-12">
-	  <form ng-submit="send()" name="sqlform" novalidate>
-
-	    <!-- Select -->
-	    <div class="row">
-	      <div class="col-xs-12 col-md-2 well well-sm text-center">select</div>
-	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<what>" name="what" ng-model="request.what" 
-		       ng-pattern="/^[^;]*$/" class="form-control" required>
-	      </div>
-	      <div class="col-xs-12 col-md-4">
-		<span class="text-center error"
-		       ng-show="sqlform.what.$dirty && sqlform.what.$error.pattern">
-		  semicolon forbidden
-		</span>
-	      </div>
-	    </div> <!-- Select -->
-
-	    <!-- From -->
-	    <div class="row">
-	      <div class="col-xs-12 col-md-2 well well-sm text-center">from</div>
-	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<tables>" name="from" ng-model="request.from"
-		       ng-pattern="/^[^;]*$/" class="form-control" required>
-	      </div>
-	      <div class="col-xs-12 col-md-4">
-		<span class="text-center error"
-		       ng-show="sqlform.from.$dirty && sqlform.from.$error.pattern">
-		  semicolon forbidden
-		</span>
-	      </div>
-	    </div> <!-- From -->
-
-	    <!-- Where -->
-	    <div class="row">
-	      <div class="col-xs-12 col-md-2 well well-sm text-center">where</div>
-	      <div class="col-xs-12 col-md-4">
-		<input type="text" placeholder="<optional conditions>" name="where" ng-model="request.where" 
-		       ng-pattern="/^[^;]*$/" class="form-control">
-	      </div>
-	      <div class="col-xs-12 col-md-4">
-		<span class="text-center error"
-		       ng-show="sqlform.where.$dirty && sqlform.where.$error.pattern">
-		  semicolon forbidden
-		</span>
-	      </div>
-	    </div> <!-- Where -->
-
-	    
-	    <div class="row">
-	      <!-- Go -->
-	      <div class="col-xs-12 col-md-offset-2 col-md-2">
-		<button type="submit" class="btn btn-primary btn-lg">
-		  <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
-		  &nbsp;Go&nbsp;&nbsp;&nbsp;&nbsp;
-		</button>
-	      </div> <!-- Go -->
-
-	      <!-- Clear -->
-	      <div class="col-xs-12 col-md-3">
-		<button type="reset" ng-click="reset()" class="btn btn-warning btn-lg">
-		  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-		  &nbsp;Clear
-		</button>
-	      </div> <!-- Clear -->
-
-	    </div> <!-- Row of Buttons -->
-	  </form>
-	</div> <!-- /col-xs-12 wrapping the form -->
+        <div class="col-xs-12">
+          <div class="btn-group">
+            <label class="btn btn-default" ng-model="log_radio" ng-click="send(0)" btn-radio="'0'">
+	      &nbsp;
+	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+              Clear
+	      &nbsp;
+            </label>
+            <label class="btn btn-primary" ng-model="log_radio" ng-click="send(1)" btn-radio="'1'">
+              &nbsp;
+	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+              Winter
+	      &nbsp;
+            </label>
+            <label class="btn btn-info" ng-model="log_radio" ng-click="send(2)" btn-radio="'2'">
+              &nbsp;
+	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+              Spring
+	      &nbsp;
+            </label>
+            <label class="btn btn-warning" ng-model="log_radio" ng-click="send(3)" btn-radio="'3'">
+              <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+              Summer
+            </label>
+            <label class="btn btn-danger" ng-model="log_radio" ng-click="send(2)" btn-radio="'2'">
+              <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+              Autumn
+            </label>
+          </div>
+        </div> <!-- /col-xs-12 wrapping the form-->
       </div> <!-- /row -->
 
 
@@ -171,9 +176,9 @@
     <!-- Angular module and Controllers -->
     <!------------------------------------>
     <script>
-      angular.module('queryApp', ['ui.bootstrap', 'ngSanitize']);
-      var queryApp = 
-      angular.module('queryApp').controller("queryController",
+      angular.module('themeApp', ['ui.bootstrap', 'ngSanitize']);
+      var app = 
+      angular.module('themeApp').controller("appController",
 	function($scope, $http, $sce) {
 
 		// Resettable data initialization
