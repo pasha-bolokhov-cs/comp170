@@ -1,0 +1,14 @@
+AuthType Basic
+AuthName "Assignment 10"
+AuthBasicProvider file
+AuthUserFile /home/student/cst401/comp170-www/passwords
+Require valid-user
+php_flag register_globals off
+php_flag display_startup_errors off					# turn off startup errors 
+php_flag display_errors off						# turn off run time errors 
+php_flag html_errors off						# do not display errors in html format 
+php_value docref_root 0							# do not reference manual pages for errors 
+php_value docref_ext 0							# so we don't care about the extension
+php_flag log_errors on							# But we may want to see the errors so log them
+php_value error_log /home/student/cst401/comp170-www/php_errors.log 	# here
+
