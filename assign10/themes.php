@@ -59,6 +59,9 @@ function clear_session()
     <!-- AngularJS needs to be loaded in "head" section -->
     <script src="angular.min.js"></script>
     <script src="angular-sanitize.min.js"></script>
+
+    <!-- Our themes -->
+    <link rel="stylesheet" href="themes.css">
   </head>
 
 
@@ -102,26 +105,55 @@ EOF_THEME_SCRIPT;
       </div>
 
 
+    </div> <!-- /container-fluid -->
 
-      <!------------->
-      <!-- Content -->
-      <!------------->
-      <div class="row" ng-cloak>
-	<div class="col-xs-12">
-	  <div class="jumbotron">
+
+
+    <!------------->
+    <!-- Content -->
+    <!------------->
+    <div class="jumbotron">
+      <div class="container">
+
+        <div class="row" ng-cloak>
+	  <div class="col-xs-12">
 	    <div class="lead text-center">
 		  Content of style <em>{{ theme }}</em>
 	    </div>
 	  </div>
-	</div>
-      </div>
-      <hr>
+        </div>
+
+        <div class="row" ng-cloak>
+	  <div class="col-xs-12">
+	    <div class="lead text-center">
+		  Content of style <em>{{ theme }}</em>
+	    </div>
+	  </div>
+        </div>
+
+        <div class="row" ng-cloak>
+	  <div class="col-xs-12">
+	    <div class="lead text-center">
+		  Content of style <em>{{ theme }}</em>
+	    </div>
+	  </div>
+        </div>
+
+      </div> <!-- /container -->
+    </div> <!-- /jumbotron -->
+
+
+
+
+    <div class="container-fluid">
 
 
 
       <!------------->
       <!-- Buttons -->
       <!------------->
+
+      <hr>
       <div class="row" ng-cloak>
         <div class="col-xs-12 text-center">
           <div class="btn-group">

@@ -1,0 +1,17 @@
+/* 
+  Assignment 10
+  Program name: ##
+  Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+  Date: ##
+  Estimated Completion Time: ##
+  Actual Completion Time: ## 
+  Description: ##
+  Invocation: ##
+  Requires: ##
+ */
+
+.jumbotron {
+    background: url(images/default.jpg) no-repeat center center;
+    background-size: cover;
+    color: #FFF;
+}
