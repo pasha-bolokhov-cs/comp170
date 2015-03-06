@@ -18,18 +18,17 @@ session_start();
 $jsonData = file_get_contents("php://input");
 $data = json_decode($jsonData);
 
-if (count($data) != 0) {
-	/* we were just asked to save the theme */
-	if (isset($data["theme"])) {
-		if ($data["theme"] == "clear") {
-			clear_session();
-			exit;
-		}
-		$_SESSION["theme"] = $data["theme"];
+/* we were just asked to save the theme: save and exit */
+if (count($data) != 0 && property_exists($data, "theme")) {
+	switch ($data->theme) {
+	case "clear":
+		clear_session();
+		exit;
+
+	default:
+		$_SESSION["theme"] = $data->theme;
 		exit;
 	}
-} else {
-	echo "<h2> no data was sent</h2>";
 }
 
 /*
@@ -71,18 +70,15 @@ function clear_session()
   <!--                 -->
   <!-- *************** -->
 <?php
-if (!isset($_SESSION['theme'])) {
-	echo '<h2>Session not set</h2>';
+if (!isset($_SESSION['theme'])) 
 	$_SESSION['theme'] = "default";
-	exit;
-} else {
-	echo "<h2>Session set to `${_SESSION['theme']}'</h2>\n";
-	echo <<<"EOF_THEME_SCRIPT"
+
+/* set 'theme' Javascript variable */
+echo <<<"EOF_THEME_SCRIPT"
 <script>
 	theme = "${_SESSION['theme']}";
 </script>
 EOF_THEME_SCRIPT;
-}
 ?>
 
 
@@ -111,7 +107,7 @@ EOF_THEME_SCRIPT;
       <!------------->
       <!-- Content -->
       <!------------->
-      <div class="row">
+      <div class="row" ng-cloak>
 	<div class="col-xs-12">
 	  <div class="lead">
 		Content of style <em>{{ theme }}<em>
@@ -241,8 +237,6 @@ EOF_THEME_SCRIPT;
 			else
 				$scope.theme = chosenTheme;
 			$scope.request["theme"] = chosenTheme;
-
-console.log("chosen theme = " + chosenTheme);		//GG
 
 			/* Request object is ready to send */
 
