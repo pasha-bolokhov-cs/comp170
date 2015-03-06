@@ -109,8 +109,10 @@ EOF_THEME_SCRIPT;
       <!------------->
       <div class="row" ng-cloak>
 	<div class="col-xs-12">
-	  <div class="lead">
-		Content of style <em>{{ theme }}<em>
+	  <div class="jumbotron">
+	    <div class="lead">
+		  Content of style <em>{{ theme }}<em>
+	    </div>
 	  </div>
 	</div>
       </div>
