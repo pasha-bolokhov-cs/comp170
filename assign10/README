@@ -3,7 +3,7 @@
 	URL
 	---
 
-	http://
+	http://deepblue.cs.camosun.bc.ca/~cst401/comp170/assign10/themes.php
 
 
 	FILES
@@ -11,5 +11,14 @@
 
 	p-code		pseudo code
 
-	next-file	description
+	themes.php	main program
+
+	themes.css	CSS styles for the content part of the web page
+
+
+	NOTES
+	-----
+
+	Each button click sends a POST request to the web server (to the same script)
+	to remember the session
 

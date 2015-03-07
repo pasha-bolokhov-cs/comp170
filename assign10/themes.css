@@ -1,17 +1,45 @@
 /* 
   Assignment 10
-  Program name: ##
+  Program name: themes.css
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: ##
-  Estimated Completion Time: ##
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Date: March 7, 2015
+  Estimated Completion Time: 8 hr
+  Actual Completion Time: 12 hr
+  Description: 
+	The set of classes for the main page content
+  Invocation: n/a
+  Requires: n/a
  */
 
 .jumbotron {
-    background: url(images/default.jpg) no-repeat center center;
-    background-size: cover;
-    color: #FFF;
+	background-size: cover;
+}
+
+.default {
+	background: url(images/default.jpg) no-repeat center center;
+	color: #CCC;
+}
+
+.winter {
+	background: url(images/winter.jpg) no-repeat center center;
+	font-family: Georgia, serif;
+	color: Turquoise;
+}
+
+.spring {
+	background: url(images/spring.jpg) no-repeat center center;
+	font-family: Arial, sans-serif;
+	color: Aqua;
+}
+
+.summer {
+	background: url(images/summer.jpg) no-repeat center center;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	color: LemonChiffon;
+}
+
+.autumn {
+	background: url(images/autumn.jpg) no-repeat center center;
+	font-family: "Palatino Linotype", Palatino, serif;
+	color: DarkOrange;
 }

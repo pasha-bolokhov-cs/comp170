@@ -1,14 +1,16 @@
 <?php
 /* 
   Assignment 10
-  Program name: ##
+  Program name: themes.php
   Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-  Date: ##
-  Estimated Completion Time: ##
-  Actual Completion Time: ## 
-  Description: ##
-  Invocation: ##
-  Requires: ##
+  Date: March 7, 2015
+  Estimated Completion Time: 8 hr
+  Actual Completion Time: 12 hr
+  Description: 
+	A PHP program which allows the user to chooser different themes (CSS classes)
+	and saves the choice in a PHP session
+  Invocation: via URL
+  Requires: n/a
  */
 
 /* start or restore a session */
@@ -112,80 +114,68 @@ EOF_THEME_SCRIPT;
     <!------------->
     <!-- Content -->
     <!------------->
-    <div class="jumbotron">
+    <div class="jumbotron" ng-class="theme">
       <div class="container">
 
         <div class="row" ng-cloak>
 	  <div class="col-xs-12">
 	    <div class="lead text-center">
-		  Content of style <em>{{ theme }}</em>
+		  <h1>Colours of the <em>{{ theme }}</em> season</h1>
+		  <h2><em>Experience</em>... the persistence of colours</h2>
+		  <br>
+		  Across a refreshed page
 	    </div>
 	  </div>
         </div>
 
-        <div class="row" ng-cloak>
-	  <div class="col-xs-12">
-	    <div class="lead text-center">
-		  Content of style <em>{{ theme }}</em>
-	    </div>
-	  </div>
-        </div>
 
+
+        <!------------->
+        <!-- Buttons -->
+        <!------------->
+	<br>
+	<br>        
+        <hr>
         <div class="row" ng-cloak>
-	  <div class="col-xs-12">
-	    <div class="lead text-center">
-		  Content of style <em>{{ theme }}</em>
-	    </div>
-	  </div>
-        </div>
+          <div class="col-xs-12 text-center">
+            <div class="btn-group">
+              <label class="btn btn-default" ng-model="log_radio" ng-click='send("clear")' btn-radio="'0'">
+        	&nbsp;
+        	<span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+                Clear
+        	&nbsp;
+              </label>
+              <label class="btn btn-primary" ng-model="log_radio" ng-click='send("winter")' btn-radio="'1'">
+		&nbsp;
+        	<span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+		Winter
+        	&nbsp;
+              </label>
+              <label class="btn btn-info" ng-model="log_radio" ng-click='send("spring")' btn-radio="'2'">
+                &nbsp;
+        	<span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+                Spring
+        	&nbsp;
+              </label>
+              <label class="btn btn-warning" ng-model="log_radio" ng-click='send("summer")' btn-radio="'3'">
+                <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+                Summer
+              </label>
+              <label class="btn btn-danger" ng-model="log_radio" ng-click='send("autumn")' btn-radio="'4'">
+                <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+                Autumn
+              </label>
+            </div>
+          </div> <!-- /col-xs-12 wrapping the form-->
+        </div> <!-- /row -->
+
 
       </div> <!-- /container -->
     </div> <!-- /jumbotron -->
 
 
 
-
     <div class="container-fluid">
-
-
-
-      <!------------->
-      <!-- Buttons -->
-      <!------------->
-
-      <hr>
-      <div class="row" ng-cloak>
-        <div class="col-xs-12 text-center">
-          <div class="btn-group">
-            <label class="btn btn-default" ng-model="log_radio" ng-click='send("clear")' btn-radio="'0'">
-	      &nbsp;
-	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
-              Clear
-	      &nbsp;
-            </label>
-            <label class="btn btn-primary" ng-model="log_radio" ng-click='send("winter")' btn-radio="'1'">
-              &nbsp;
-	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
-              Winter
-	      &nbsp;
-            </label>
-            <label class="btn btn-info" ng-model="log_radio" ng-click='send("spring")' btn-radio="'2'">
-              &nbsp;
-	      <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
-              Spring
-	      &nbsp;
-            </label>
-            <label class="btn btn-warning" ng-model="log_radio" ng-click='send("summer")' btn-radio="'3'">
-              <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
-              Summer
-            </label>
-            <label class="btn btn-danger" ng-model="log_radio" ng-click='send("autumn")' btn-radio="'4'">
-              <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
-              Autumn
-            </label>
-          </div>
-        </div> <!-- /col-xs-12 wrapping the form-->
-      </div> <!-- /row -->
 
 
 
@@ -196,21 +186,24 @@ EOF_THEME_SCRIPT;
       <!-- error message -->
       <hr ng-show="showResult || waiting">
       <div class="row" ng-show="showResult && error" ng-cloak>
-	<div class="col-xs-12 col-md-8">
+	<div class="col-xs-12 col-md-8 col-md-offset-2">
 	  <alert class="text-center" type="danger" close="reset()">{{ error }}</alert>
 	</div>
       </div> <!-- /div with any errors -->
 
       <!-- ... loading ... -->
       <div class="row" ng-show="waiting">
-	<div class="col-xs-12 col-md-8">
+	<div class="col-xs-12 col-md-8 col-md-offset-2">
 	  <alert class="text-center" type="warning"><em>...&nbsp;loading&nbsp;...</em></alert>
 	</div>
       </div> <!-- /div with ...loading... -->
 
       <!-- actual results -->
       <div class="row" ng-show="showResult && !error" ng-cloak>
-	<div class="col-xs-12 col-md-10" ng-bind-html="result">
+	<div class="col-xs-12 col-md-8 col-md-offset-2">
+	  <alert type="info" class="text-center" close="reset()">
+	    {{ result }}
+	  </alert>
 	</div>
       </div> <!-- /div with the results -->
     </div> <!-- /container-fluid -->
@@ -261,7 +254,9 @@ EOF_THEME_SCRIPT;
 		$scope.send = function(chosenTheme) {
 			/* Re-initialize */
 			$scope.error = false;
-			$scope.waiting = true;
+			/** Not really waiting long time here
+				$scope.waiting = true;
+			*/
 			$scope.showResult = false;
 
 			/* take on the chosen theme */
@@ -291,6 +286,14 @@ EOF_THEME_SCRIPT;
 				// Indicate that we have an answer
 				$scope.waiting = false;
 				$scope.showResult = true;
+
+				// We do not need any result here except when error or cleared
+				if (!$scope.error)
+					$scope.showResult = false;
+				if (chosenTheme === "clear") {
+					$scope.showResult = true;
+					$scope.result = "Session cleared";
+				}
 			});
 		}	/* send() */
 

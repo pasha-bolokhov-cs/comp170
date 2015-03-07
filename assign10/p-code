@@ -1,15 +1,20 @@
 Pseudo Code
 -----------
 
-filename:
-		description
+themes.php:
+		start a session
 
-		description
+		check if there is POST input
 
+		if yes => save the theme name in the session and quit
 
-nextfile:
-		description
+			if theme name is "clear", clear the session
 
-		description
+		start HTML, head, body (to enable Javascript)
 
+		pass "theme" parameter to a Javascript variable
+
+		render the rest of the HTML page with Javascript
+		(each button hit sends a POST request 
+		 with the session name to the same script)
 
