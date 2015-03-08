@@ -15,31 +15,46 @@
 	background-size: cover;
 }
 
-.default {
+.jumbotron.default {
 	background: url(images/default.jpg) no-repeat center center;
+}
+
+h1.default, h2.default, p.default {
 	color: #CCC;
 }
 
-.winter {
+.jumbotron.winter {
 	background: url(images/winter.jpg) no-repeat center center;
+}
+
+h1.winter, h2.winter, p.winter {
 	font-family: Georgia, serif;
 	color: Turquoise;
 }
 
-.spring {
+.jumbotron.spring {
 	background: url(images/spring.jpg) no-repeat center center;
+}
+
+h1.spring, h2.spring, p.spring {
 	font-family: Arial, sans-serif;
 	color: Aqua;
 }
 
-.summer {
+.jumbotron.summer {
 	background: url(images/summer.jpg) no-repeat center center;
+}
+
+h1.summer, h2.summer, p.summer {
 	font-family: "Comic Sans MS", cursive, sans-serif;
 	color: LemonChiffon;
 }
 
-.autumn {
+.jumbotron.autumn {
 	background: url(images/autumn.jpg) no-repeat center center;
+}
+
+h1.autumn, h2.autumn, p.autumn {
 	font-family: "Palatino Linotype", Palatino, serif;
 	color: DarkOrange;
 }

@@ -120,10 +120,10 @@ EOF_THEME_SCRIPT;
         <div class="row" ng-cloak>
 	  <div class="col-xs-12">
 	    <div class="lead text-center">
-		  <h1>Colours of the <em>{{ theme }}</em> season</h1>
-		  <h2><em>Experience</em>... the persistence of colours</h2>
+		  <h1 ng-class="theme">Colours of the <em>{{ theme }}</em> season</h1>
+		  <h2 ng-class="theme"><em>Experience</em>... the persistence of colours</h2>
 		  <br>
-		  Across a refreshed page
+		  <p ng-class="theme">Across a refreshed page</p>
 	    </div>
 	  </div>
         </div>
