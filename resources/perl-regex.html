@@ -1,0 +1,590 @@
+
+<!-- saved from url=(0062)http://hal.cs.camosun.bc.ca/~deid/comp170/regExpCribSheet.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Starmerj's Perl RegExp Crib Sheet</title>
+
+
+<style type="text/css">
+TD.head {font-family: verdana, arial, helvetica; font-size: 10pt; font-weight : bold; text-align: center; background-color : #D3DCE3;}
+</style></head><body bgcolor="#ffffff">
+
+<center>
+<h2>Starmerj's Perl RegExp Crib Sheet</h2>
+Or
+<h3>Essential Perl Regular Expression Syntax</h3>
+</center>
+
+<b>Metacharacters</b>
+<table border="0" cellpadding="5" cellspacing="1">
+<tbody><tr>
+  <td class="head">
+    <b>Code</b>
+  </td>
+  <td class="head">
+    <b>Meaning</b>
+  </td>
+  <td class="head">
+    <b>Example</b>
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\</code>
+  </td>
+  <td> The
+'escape' character. Put it before another meta character to match that
+metacharater or put it in front of a non-metacharater to match
+something else (see the following tables). </td>
+  <td>
+    <code>/\\/</code> matches the backslash character, '\'.
+    <br>
+    <code>/\$/</code> matches the dollar-sign character, '$'.
+    <br>
+    <code>/\w/</code> matches a single alphanumeric character.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>|</code>
+  </td>
+  <td>
+    The 'alternation' character.  Put it between two strings to match either one.
+  </td>
+  <td>
+    <code>/Yo|Hello|Hola/</code> matches 'Yo', 'Hello' or 'Hola'.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>(</code> and <code>)</code>
+  </td>
+  <td>
+For grouping and memory. Put stuff between parentheses if it should be
+grouped together. Anything that matches the stuff put between
+parentheses can also be recalled with the scalars <code>\1, \2... \n</code> and <code>$1, $2... $n</code>
+depending on whether you are on the "matching" side side or the
+"substitution" side of a regular expression (see last example). To
+'turn off' the memory, put '<code>?:</code>' after the first parentheses.
+  </td>
+  <td>
+    <code>/(Yo|Hello|Hola) Gary/</code> matches 'Yo Gary', 'Hello Gary' or 'Hola Gary'.  Note, if a match was found, <code>$1</code> now contains 'Yo', 'Hello' or 'Hola'. 
+    <br>
+    <code>/(?:Yo|Hello|Hola) Gary/</code> matches the same as above but does not store anything in <code>$1</code>.
+    <br>
+    <code>s/([a-z])\1/$1/g</code>
+matches any matching pair of lowercase alphabetical characters and
+replaces the two characters with only one occurance of that character. </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>[</code> and <code>]</code>
+  </td>
+  <td>
+For sets or classes of characters. You can imagine all of the
+characters inside the square-brackets as having an alternator (pipe)
+between them. It also allows for ranges of characters (see examples). </td>
+  <td>
+    <code>/[abc]/</code> matches 'a', 'b' or 'c'.  
+    <br>
+    <code>/[a-z]/</code> matches any lowercase character between 'a' and 'z'.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>{</code>and<code>}</code>
+  </td>
+  <td>
+    For specifying ranges of repetitions.  
+  </td>
+  <td>
+    <code>/Yo{3}/</code> matches 'Yooo'.
+    <br>
+    <code>/Yo{3,}/</code> matches 'Yo' with 3 or more 'o's.
+    <br>
+    <code>/Yo{3,5}/</code> matches 'Yo' with 3, 4 or 5 'o's.
+    <br>
+    <code>/(?:Yo){3}/</code> matches 'YoYoYo'.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>.</code>
+  </td>
+  <td>
+    Matches any single character except newline.
+  </td>
+  <td>
+    <code>/./</code> Matches any single character but a newline!
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>*</code>
+  </td>
+  <td>
+    This matches zero or more of the preceding character or group.  This is the same as {0,}.  <b>NOTE:</b>When <code>*</code> is followed by <code>?</code>, then the matching is done in 'non-greedy' mode.  See example.
+  </td>
+  <td>
+    <code>/Yo*/</code> Matches 'Y' with any number of following 'o's (i.e. 'Y', 'Yo', 'Yoooooooo')
+    <br>
+    <code>/Y.*/</code> Matches 'Y' with any number of anything except newlines.
+    <br>
+    <code>/Y.*?Yo/</code> Same as above but, the dot<code>.</code> stops matching as soon as it gets to 'Yo'.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>+</code>
+  </td>
+  <td>
+    This matches one or more of the preceding character or group.  This is the same as {1,}.  <b>NOTE:</b>When <code>+</code> is followed by <code>?</code>, then the matching is done in 'non-greedy' mode.  See example.
+  </td>
+  <td>
+    <code>/Yo+/</code> Matches 'Yo' with any number of following 'o's.
+    <br>
+    <code>/Y.+/</code> Matches 'Y' with any number greater than one of anything except newlines.
+    <br>
+    <code>/Y.+?Yo/</code> Same as above but, the dot<code>.</code> stops matching as soon as it gets to 'Yo'.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>?</code>
+  </td>
+  <td>
+    This matches zero or one of the preceding character or group.  This is the same as {0,1}.
+  </td>
+  <td>
+    <code>/Yo?/</code> Matches 'Y' or 'Yo'.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>^</code>
+  </td>
+  <td> If
+placed at the start of an expression, it matches at the beginning of
+the string. If placed after an open-square-bracket, <code>[</code>, it means 'not the contents of the square-brackets'.  Otherwise it just matches '^'.
+  </td>
+  <td>
+    <code>/^abcd/</code> only matches if the string begins with 'abcd'.
+    <br>
+    <code>/[^a]/</code> matches 'not a'.
+    <br>
+    <code>/la^la/</code> matches 'la^la'.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>$</code>
+  </td>
+  <td> If
+placed at the end of an expression, it matches at the end of the string
+or just before the newline at the end of the string. Otherwise it will
+be interpreted as a scalar expression (unless it is escaped with a
+backslash '\'). Compare to \Z. </td>
+  <td>
+    <code>/wxyz$/</code> only matches if the string ends with 'wxyz' or if
+'wxyz' comes immediately before a newline.
+  </td>
+</tr>
+</tbody></table>
+
+<br><br>
+<b>Class Codes</b>
+<table border="0" cellpadding="5" cellspacing="1">
+<tbody><tr>
+  <td class="head">
+    <b>Code</b>
+  </td>
+  <td class="head">
+    <b>Matches</b>
+  </td>
+  <td class="head">
+    <b>Equivalent Class</b>
+  </td>
+  <td class="head">
+    <b>Example</b>
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\d</code>
+  </td>
+  <td>
+    A digit
+  </td>
+  <td>
+    <code>[0-9]</code>
+  </td>
+  <td>
+    <code>/\d\d/</code> Matches two digits (i.e. 87).
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>\D</code>
+  </td>
+  <td>
+    A non-digit
+  </td>
+  <td>
+    <code>[^0-9]</code>
+  </td>
+  <td>
+    <code>/\D\D/</code> Matches to non-digit (i.e. M#).
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\w</code>
+  </td>
+  <td>
+    A word (alphanumeric) character
+  </td>
+  <td>
+    <code>[a-zA-Z_0-9]</code>
+  </td>
+  <td>
+    <code>/\w\w/</code> Matches two alphanumeric characters (i.e. a9)
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>\W</code>
+  </td>
+  <td>
+    A non-word (non-alphanumeric) character
+  </td>
+  <td>
+    <code>[^a-zA-Z_0-9]</code>
+  </td>
+  <td>
+    <code>/\W\W/</code> Matches two non-alphanumeric characters (i.e. &amp;!)
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\s</code>
+  </td>
+  <td>
+    A whitespace character
+  </td>
+  <td>
+    <code>[ \t\n\r\f]</code>
+  </td>
+  <td>
+    <code>/\s\w+/</code> Matches a single white space before one or more word characters.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>\S</code>
+  </td>
+  <td>
+    A non-whitespace character
+  </td>
+  <td>
+    <code>[^ \t\n\r\f]</code>
+  </td>
+  <td>
+    <code>/\S\s+\S</code>
+Matches a single non-whitespace character followed by one more
+whitespace characters followed by a single non-whitespace character. </td>
+</tr>
+</tbody></table>
+
+<br><br>
+<b>Anchor Codes</b>
+<table border="0" cellpadding="5" cellspacing="1">
+<tbody><tr>
+  <td class="head">
+    <b>Code</b>
+  </td>
+  <td class="head">
+    <b>Meaning</b>
+  </td>
+  <td class="head">
+    <b>Example</b>
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>^</code>
+  </td>
+  <td> If
+placed at the start of an expression, it matches at the beginning of
+the string. If placed after an open-square-bracket, <code>[</code>, it means 'not the contents of the square-brackets'.  Otherwise it just matches '^'.
+  </td>
+  <td>
+    <code>/^abcd/</code> only matches if the string begins with 'abcd'.
+    <br>
+    <code>/[^a]/</code> matches 'not a'.
+    <br>
+    <code>/la^la/</code> matches 'la^la'.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>$</code>
+  </td>
+  <td> If
+placed at the end of an expression, it matches at the end of the string
+or just before the newline at the end of the string. Otherwise it will
+be interpreted as a scalar expression (unless it is escaped with a
+backslash '\'). Compare to <code>\Z</code>.
+  </td>
+  <td>
+    <code>/wxyz$/</code> only matches if the string ends with 'wxyz' or if
+'wxyz' comes immediately before a newline.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\b</code>
+  </td>
+  <td>
+    Matches at a word boundary.
+  </td>
+  <td>
+    <code>/Yo\b/</code> Matches 'Yo' but not 'Yo-yo'.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>\B</code>
+  </td>
+  <td>
+    Matches everything except at a word boundary.
+  </td>
+  <td>
+    <code>/reg\B/</code> Matches 'reggie' or 'regexp' but not 'reg'.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\A</code>
+  </td>
+  <td>
+    Matches at the start of a string.
+  </td>
+  <td>
+    <code>/\Aabcd/</code> only matches if the string begins with 'abcd'.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>\Z</code>
+  </td>
+  <td>
+    Matches at the end of the string.  Compare to <code>$</code>.
+  </td>
+  <td>
+    <code>/wxyz\Z/</code> only matches if the string ends with 'wxyz'.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>(?=...)</code>
+  </td>
+  <td>
+This is a "look ahead" thing and always comes after some other part of
+the regular expression. It means, match the stuff before me only if it
+is followed by "...". </td>
+  <td>
+
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>(?!...)</code>
+  </td>
+  <td>
+This is a "look ahead" thing and always comes after some other part of
+the regular expression. It means, match the stuff before me only if it
+is not followed by "...". </td>
+  <td>
+
+  </td>
+</tr>
+</tbody></table>
+
+<br>
+<br>
+<b>Modifiers</b>
+<table border="0" cellpadding="5" cellspacing="1">
+<tbody><tr>
+  <td class="head">
+    <b>Code</b>
+  </td>
+  <td class="head">
+    <b>Meaning</b>
+  </td>
+  <td class="head">
+    <b>Example</b>
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>g</code>
+  </td>
+  <td>
+    Match Globally.  Find all of the occurrences in the string (not just the first one).
+  </td>
+  <td>
+    <code>//g</code>
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>i</code>
+  </td>
+  <td>
+    Do case insensitive pattern matching.
+  </td>
+  <td>
+    <code>//i</code>
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>m</code>
+  </td>
+  <td>
+    Treat string as multiple lines.
+  </td>
+  <td>
+    <code>//m</code>
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>o</code>
+  </td>
+  <td>
+    Only compile the pattern once.
+  </td>
+  <td>
+    <code>//o</code>
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>s</code>
+  </td>
+  <td>
+    Treat string as a single line.
+  </td>
+  <td>
+    <code>//s</code>
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>x</code>
+  </td>
+  <td>
+    Use extended regular expressions.
+  </td>
+  <td>
+    <code>//x</code>
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>e</code>
+  </td>
+  <td>
+    Evaluate the right side as an expressions.
+  </td>
+  <td>
+    <code>//e</code>
+  </td>
+</tr>
+</tbody></table>
+
+<br>
+<b>Random Stuff</b>
+<table border="0" cellpadding="5" cellspacing="1">
+<tbody><tr>
+  <td class="head">
+    <b>Code</b>
+  </td>
+  <td class="head">
+    <b>Meaning</b>
+  </td>
+  <td class="head">
+    <b>Example</b>
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>m</code>
+  </td>
+  <td>
+    Start your regular expression syntax with <code>m</code> and you can set the delimiters.
+  </td>
+  <td>
+    <code>m#Yo-yo#</code> Matches 'Yo-yo'.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\x</code>
+  </td>
+  <td>
+    Followed by one or two hexadecimal digits, <code>\x</code> will match the character having that hexadecimal number.  See the <a href="http://www.carc.musc.edu/docs/perl_regexp/ascii.html">ascii set</a>.
+  </td>
+  <td>
+    <code>/\xd/</code> Matches a carriage return character.
+    <br>
+    <code>/\x2a/</code> Matches an asterisk character.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>\0</code>
+  </td>
+  <td>
+    Followed by one, two or three octal digits, <code>\0</code> will match the character having that octal number.  See the <a href="http://www.carc.musc.edu/docs/perl_regexp/ascii.html">ascii set</a>.
+  </td>
+  <td>
+    <code>/\012/</code> Matches a line feed character.
+    <br>
+    <code>/\044/</code> Matches a dollar sign character.
+  </td>
+</tr>
+<tr bgcolor="#dddddd">
+  <td>
+    <code>\c</code>
+  </td>
+  <td>
+    Followed by a single character, <code>\c</code> will match the corresponding control character.
+  </td>
+  <td>
+    <code>/\cD/</code> Matches a Control-D character.
+    <br>
+    <code>/\cG/</code> Matches a Control-G character.
+  </td>
+</tr>
+<tr bgcolor="#eeeeee">
+  <td>
+    <code>\number</code>
+  </td>
+  <td>
+If "number" is single digit or it does not start with '0' (zero), then
+it matches whatever the corresponding parentheses matched. </td>
+  <td>
+    <code>/(Hello) \1/</code> Matches "Hello Hello".
+    <br>
+    <code>/(Yo*?) \1/</code> Matches two equal strings separated by a space that start with "Yo" followed by any number of 'o's.
+  </td>
+</tr>
+</tbody></table>
+
+<br>
+Send comments, additions and corrections to <a href="mailto:starmerj@musc.edu">Joshua Starmer</a>
+<br>
+<font size="2">Brought to you by the friendly folks in the <a href="http://www.itlab.musc.edu/">IT-Lab</a> at the
+Medical University of South Carolina.</font>
+
+</body></html>
